@@ -1,5 +1,5 @@
 import { Component, input, ViewEncapsulation } from '@angular/core';
-import { Folder } from './model';
+import { File } from './model';
 
 @Component({
   selector: 'ngx-voyage',
@@ -11,5 +11,5 @@ import { Folder } from './model';
   `,
 })
 export class NgxVoyageComponent {
-  folder = input.required<Folder>();
+  files = input.required<File[]>();
 }

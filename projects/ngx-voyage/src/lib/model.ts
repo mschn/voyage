@@ -1,15 +1,6 @@
-export type Item = Folder | File;
-
-export interface Folder {
-  type: 'folder';
-  children: Item[];
-  name: string;
-  modifiedDate: Date;
-}
-
 export interface File {
-  type: 'file';
-  size: number;
+  type: 'folder' | 'file';
   name: string;
+  size: number;
   modifiedDate: Date;
 }
