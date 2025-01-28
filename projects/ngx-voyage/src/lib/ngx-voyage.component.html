@@ -1,0 +1,10 @@
+<div class="p-3">
+  <table class="border">
+    @for (item of folder().children; track item.name) {
+      <tr class="odd:bg-gray-100">
+        <td class="p-2 border-b">{{ item.name }}</td>
+        <td class="p-2 border-b">{{ item.type }}</td>
+      </tr>
+    }
+  </table>
+</div>
