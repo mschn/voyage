@@ -4,13 +4,14 @@ import { File, NgxVoyageComponent } from 'ngx-voyage';
 @Component({
   selector: 'app-root',
   imports: [NgxVoyageComponent],
-  template: '<ngx-voyage [files]="files()"></ngx-voyage>',
+  template:
+    '<ngx-voyage [path]="path()" [files]="files()" (openFolder)=openFolder($event)></ngx-voyage>',
 })
 export class DemoComponent {
-  path = signal('/');
+  path = signal<string[]>([]);
 
   filesResource = resource({
-    request: () => encodeURIComponent(this.path()),
+    request: () => encodeURIComponent('/' + this.path().join('/')),
     loader: async ({ request, abortSignal }) => {
       const response = await fetch(`http://localhost:3003/ls/${request}`, {
         signal: abortSignal,
@@ -25,4 +26,8 @@ export class DemoComponent {
     }
     return [];
   });
+
+  openFolder(path: string[]) {
+    this.path.set(path);
+  }
 }

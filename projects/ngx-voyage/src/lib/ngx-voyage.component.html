@@ -1,16 +1,24 @@
 <div class="p-3">
-  <table class="border">
+  <table class="w-full">
     @for (file of files(); track file.name) {
-      <tr class="odd:bg-gray-100">
-        <td class="p-2 border-b">{{ file.name }}</td>
-        <td class="p-2 border-b">
-          @if (file.isDirectory) {
-            <img src="../assets/folder.svg" />
-          } @else if (file.isFile) {
-            <img src="../assets/file.svg" />
-          }
+      <tr
+        class="odd:bg-gray-100"
+        [ngClass]="{ 'text-gray-500': file.name.startsWith('.') }"
+        (click)="onRowClick(file)"
+      >
+        <td class="p-2 rounded-l-md">
+          <div class="flex flex-row gap-3 items-center">
+            <img
+              [src]="
+                file.isDirectory ? '../assets/folder.svg' : '../assets/file.svg'
+              "
+              class="h-8"
+            />
+            <span>{{ file.name }}</span>
+          </div>
         </td>
-        <td class="p-2 border-b">
+
+        <td class="p-2 rounded-r-md">
           @if (file.isDirectory) {
             --
           } @else if (file.isFile) {
