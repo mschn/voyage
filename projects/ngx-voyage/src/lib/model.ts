@@ -1,5 +1,7 @@
 export interface File {
-  type: 'folder' | 'file';
+  isDirectory: boolean;
+  isFile: boolean;
+  isSymbolicLink: boolean;
   name: string;
   size: number;
   modifiedDate: Date;

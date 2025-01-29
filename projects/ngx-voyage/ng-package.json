@@ -3,5 +3,6 @@
   "dest": "../../dist/ngx-voyage",
   "lib": {
     "entryFile": "src/public-api.ts"
-  }
+  },
+  "assets": [{ "input": "src/assets", "glob": "**/*.svg", "output": "assets" }]
 }

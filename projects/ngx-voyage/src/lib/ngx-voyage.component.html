@@ -3,9 +3,19 @@
     @for (file of files(); track file.name) {
       <tr class="odd:bg-gray-100">
         <td class="p-2 border-b">{{ file.name }}</td>
-        <td class="p-2 border-b">{{ file.type }}</td>
         <td class="p-2 border-b">
-          {{ file.size }}
+          @if (file.isDirectory) {
+            <img src="../assets/folder.svg" />
+          } @else if (file.isFile) {
+            <img src="../assets/file.svg" />
+          }
+        </td>
+        <td class="p-2 border-b">
+          @if (file.isDirectory) {
+            --
+          } @else if (file.isFile) {
+            {{ file.size }}
+          }
         </td>
       </tr>
     }

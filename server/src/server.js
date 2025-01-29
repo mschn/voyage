@@ -17,7 +17,8 @@ app.get("/ls/:paramPath", (req, res) => {
         const filePath = path.join(paramPath, p);
         const stat = fs.statSync(filePath);
         return {
-          type: stat.isDirectory ? "folder" : "file",
+          isDirectory: stat.isDirectory(),
+          isFile: stat.isFile(),
           name: p,
           size: stat.size,
           modifiedDate: stat.modifiedDate,
