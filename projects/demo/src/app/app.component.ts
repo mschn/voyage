@@ -4,8 +4,13 @@ import { File, NgxVoyageComponent } from 'ngx-voyage';
 @Component({
   selector: 'app-root',
   imports: [NgxVoyageComponent],
-  template:
-    '<ngx-voyage [path]="path()" [files]="files()" (openFolder)=openFolder($event)></ngx-voyage>',
+  template: `<div class="h-full w-full"
+    ><ngx-voyage
+      [path]="path()"
+      [files]="files()"
+      (openFolder)="openFolder($event)"
+    ></ngx-voyage
+  ></div>`,
 })
 export class DemoComponent {
   path = signal<string[]>([]);

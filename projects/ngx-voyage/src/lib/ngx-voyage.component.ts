@@ -1,10 +1,11 @@
 import { Component, input, output, ViewEncapsulation } from '@angular/core';
 import { File } from './model';
 import { NgClass } from '@angular/common';
+import { TitleComponent } from './title.component';
 
 @Component({
   selector: 'ngx-voyage',
-  imports: [NgClass],
+  imports: [TitleComponent, NgClass],
   templateUrl: './ngx-voyage.component.html',
   encapsulation: ViewEncapsulation.None,
   styles: `
