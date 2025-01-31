@@ -1,8 +1,8 @@
 import { NgClass } from '@angular/common';
 import { Component, input, output, ViewEncapsulation } from '@angular/core';
-import { File } from './model';
-import { TitleComponent } from './title.component';
-import { prettyBytes } from './utils';
+import { File } from '../model/model';
+import { prettyBytes } from '../model/utils';
+import { TitleComponent } from '../title/title.component';
 
 @Component({
   selector: 'ngx-voyage',
