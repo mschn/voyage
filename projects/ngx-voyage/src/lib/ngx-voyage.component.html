@@ -30,7 +30,7 @@
             @if (file.isDirectory) {
               --
             } @else if (file.isFile) {
-              {{ file.size }}
+              {{ prettyBytes(file.size) }}
             }
           </td>
         </tr>

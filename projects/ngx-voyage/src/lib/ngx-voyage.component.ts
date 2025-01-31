@@ -2,6 +2,7 @@ import { NgClass } from '@angular/common';
 import { Component, input, output, ViewEncapsulation } from '@angular/core';
 import { File } from './model';
 import { TitleComponent } from './title.component';
+import { prettyBytes } from './utils';
 
 @Component({
   selector: 'ngx-voyage',
@@ -14,6 +15,8 @@ export class NgxVoyageComponent {
   path = input.required<string[]>();
   files = input.required<File[]>();
   openFolder = output<string[]>();
+
+  prettyBytes = prettyBytes;
 
   titleNavigate(path: string) {
     const paths = path
