@@ -20,6 +20,7 @@ import { pathToUrl, urlToPath } from './model';
       [path]="path()"
       [files]="files()"
       (openFolder)="openFolder($event)"
+      (openFile)="openFile($event)"
     ></ngx-voyage
   ></div>`,
 })
@@ -60,7 +61,11 @@ export class VoyageComponent {
   openFolder(path: string[]) {
     this.path.set(path);
     const url = pathToUrl(path);
-    console.log(url);
     this.#router.navigateByUrl(url);
+  }
+
+  openFile(path: string[]) {
+    const url = encodeURIComponent(pathToUrl(path));
+    window.open(`http://localhost:3003/open/${url}`, '_blank')?.focus();
   }
 }

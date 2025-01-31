@@ -14,7 +14,9 @@ import { TitleComponent } from '../title/title.component';
 export class NgxVoyageComponent {
   path = input.required<string[]>();
   files = input.required<File[]>();
+
   openFolder = output<string[]>();
+  openFile = output<string[]>();
 
   prettyBytes = prettyBytes;
 
@@ -27,6 +29,11 @@ export class NgxVoyageComponent {
   }
 
   onRowClick(file: File) {
-    this.openFolder.emit([...this.path(), file.name]);
+    const targetPath = [...this.path(), file.name];
+    if (file.isDirectory) {
+      this.openFolder.emit(targetPath);
+    } else {
+      this.openFile.emit(targetPath);
+    }
   }
 }
