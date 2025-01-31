@@ -12,7 +12,7 @@ import { File, NgxVoyageComponent } from 'ngx-voyage';
     ></ngx-voyage
   ></div>`,
 })
-export class DemoComponent {
+export class VoyageComponent {
   path = signal<string[]>([]);
 
   filesResource = resource({

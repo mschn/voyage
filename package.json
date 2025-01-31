@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve demo",
+    "start": "ng serve voyage",
     "build": "ng build ngx-voyage",
     "watch": "ng build ngx-voyage --watch --configuration development",
     "server": "npm run start --prefix server",
