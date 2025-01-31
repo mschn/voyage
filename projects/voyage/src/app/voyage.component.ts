@@ -1,5 +1,16 @@
-import { Component, computed, resource, signal } from '@angular/core';
+import {
+  Component,
+  computed,
+  DestroyRef,
+  inject,
+  resource,
+  signal,
+} from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { NavigationEnd, Router } from '@angular/router';
 import { File, NgxVoyageComponent } from 'ngx-voyage';
+import { filter } from 'rxjs';
+import { pathToUrl, urlToPath } from './model';
 
 @Component({
   selector: 'app-root',
@@ -13,6 +24,8 @@ import { File, NgxVoyageComponent } from 'ngx-voyage';
   ></div>`,
 })
 export class VoyageComponent {
+  #router = inject(Router);
+  #destroyRef = inject(DestroyRef);
   path = signal<string[]>([]);
 
   filesResource = resource({
@@ -32,7 +45,22 @@ export class VoyageComponent {
     return [];
   });
 
+  constructor() {
+    this.#router.events
+      .pipe(
+        filter((event) => event instanceof NavigationEnd),
+        takeUntilDestroyed(this.#destroyRef),
+      )
+      .subscribe((event) => {
+        const p = urlToPath(event.url);
+        this.path.set(p);
+      });
+  }
+
   openFolder(path: string[]) {
     this.path.set(path);
+    const url = pathToUrl(path);
+    console.log(url);
+    this.#router.navigateByUrl(url);
   }
 }
