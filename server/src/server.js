@@ -11,6 +11,16 @@ app.use(cors());
 
 app.use(express.static("../dist/voyage/browser/"));
 
+app.get("/api/version", (req, res) => {
+  const versionFile = path.join(__dirname, "..", "..", "version.txt");
+  try {
+    const file = fs.readFileSync(versionFile);
+    res.send(file.toString("utf8"));
+  } catch (e) {
+    res.send("0.0.0");
+  }
+});
+
 app.get("/api/ls/:paramPath", (req, res) => {
   const { paramPath } = req.params;
   const files = fs

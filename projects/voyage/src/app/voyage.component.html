@@ -1,0 +1,9 @@
+<div class="h-full w-full flex flex-col">
+  <ngx-voyage
+    [path]="path()"
+    [files]="files()"
+    (openFolder)="openFolder($event)"
+    (openFile)="openFile($event)"
+  ></ngx-voyage>
+  <div class="p-3 text-right">Voyage {{ version.value() }}</div>
+</div>

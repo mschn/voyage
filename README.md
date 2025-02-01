@@ -8,6 +8,18 @@ It consists of:
 - `voyage`, an Angular web application that binds the UI to the server
 - A node.js server to read your local files
 
+## Startup
+
+You can run Voyage in Docker with the following command:
+
+```bash
+docker run -d --rm \
+    --name voyage \
+    -p 3003:3003 \
+    -v $HOME:/files \
+    mschnr/voyage
+```
+
 ## Development
 
 To start the dev environment:

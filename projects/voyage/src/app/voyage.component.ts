@@ -15,14 +15,7 @@ import { pathToUrl, urlToPath } from './model';
 @Component({
   selector: 'app-root',
   imports: [NgxVoyageComponent],
-  template: `<div class="h-full w-full"
-    ><ngx-voyage
-      [path]="path()"
-      [files]="files()"
-      (openFolder)="openFolder($event)"
-      (openFile)="openFile($event)"
-    ></ngx-voyage
-  ></div>`,
+  templateUrl: './voyage.component.html',
 })
 export class VoyageComponent {
   #router = inject(Router);
@@ -36,6 +29,13 @@ export class VoyageComponent {
         signal: abortSignal,
       });
       return (await response.json()) as File[];
+    },
+  });
+
+  version = resource({
+    loader: async () => {
+      const response = await fetch('http://localhost:3003/api/version');
+      return await response.text();
     },
   });
 
