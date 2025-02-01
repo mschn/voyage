@@ -21,14 +21,15 @@ app.get("/api/version", (req, res) => {
   }
 });
 
-app.get("/api/ls/:paramPath", (req, res) => {
-  const { paramPath } = req.params;
+app.get("/api/ls", (req, res) => {
+  const { folder } = req.query;
+  const folderPath = decodeURIComponent(folder);
   const files = fs
-    .readdirSync(paramPath)
+    .readdirSync(folderPath)
     .map((p) => {
       try {
-        const filePath = path.join(paramPath, p);
-        const stat = fs.statSync(filePath);
+        const filePaath = path.join(folderPath, p);
+        const stat = fs.statSync(filePaath);
         return {
           isDirectory: stat.isDirectory(),
           isFile: stat.isFile(),
@@ -40,22 +41,23 @@ app.get("/api/ls/:paramPath", (req, res) => {
         return undefined;
       }
     })
-    .filter((o) => o != null);
+    .filter((o) => o != undefined);
+  console.log(`GET /api/ls ${folderPath} ${files.length} files`);
   res.send(files);
 });
 
-app.get("/api/open/:p", async (req, res) => {
-  const { p } = req.params;
+app.get("/api/open", async (req, res) => {
+  const { file } = req.query;
   try {
-    const paramPath = decodeURIComponent(p);
-    const stat = fs.statSync(paramPath);
+    const filePath = decodeURIComponent(file);
+    const stat = fs.statSync(filePath);
     if (!stat.isFile) {
-      res.status(400).send({ error: `Not a file: ${paramPath}` });
+      res.status(400).send({ error: `Not a file: ${filePath}` });
       return;
     }
-    const mimeType = mime.lookup(paramPath);
+    const mimeType = mime.lookup(filePath);
     res.set("Content-Type", mimeType);
-    const content = fs.readFileSync(paramPath); // TODO check large files
+    const content = fs.readFileSync(filePath); // TODO check large files
     res.send(content);
   } catch (e) {
     console.error(e);
