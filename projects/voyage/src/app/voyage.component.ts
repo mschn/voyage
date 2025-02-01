@@ -32,7 +32,7 @@ export class VoyageComponent {
   filesResource = resource({
     request: () => encodeURIComponent('/' + this.path().join('/')),
     loader: async ({ request, abortSignal }) => {
-      const response = await fetch(`http://localhost:3003/ls/${request}`, {
+      const response = await fetch(`http://localhost:3003/api/ls/${request}`, {
         signal: abortSignal,
       });
       return (await response.json()) as File[];
@@ -66,6 +66,6 @@ export class VoyageComponent {
 
   openFile(path: string[]) {
     const url = encodeURIComponent(pathToUrl(path));
-    window.open(`http://localhost:3003/open/${url}`, '_blank')?.focus();
+    window.open(`http://localhost:3003/api/open/${url}`, '_blank')?.focus();
   }
 }

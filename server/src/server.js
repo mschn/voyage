@@ -9,7 +9,9 @@ const port = 3003;
 
 app.use(cors());
 
-app.get("/ls/:paramPath", (req, res) => {
+app.use(express.static("../dist/voyage/browser/"));
+
+app.get("/api/ls/:paramPath", (req, res) => {
   const { paramPath } = req.params;
   const files = fs
     .readdirSync(paramPath)
@@ -32,7 +34,7 @@ app.get("/ls/:paramPath", (req, res) => {
   res.send(files);
 });
 
-app.get("/open/:p", async (req, res) => {
+app.get("/api/open/:p", async (req, res) => {
   console.log("OINK");
 
   const { p } = req.params;

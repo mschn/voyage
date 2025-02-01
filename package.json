@@ -3,10 +3,11 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve voyage",
-    "build": "ng build ngx-voyage",
-    "watch": "ng build ngx-voyage --watch --configuration development",
-    "server": "npm run start --prefix server",
+    "start:app": "ng serve voyage",
+    "start:lib": "ng build ngx-voyage --watch --configuration development",
+    "start:server": "npm run start --prefix server",
+    "build:lib": "ng build ngx-voyage",
+    "build:app": "ng build voyage",
     "test": "ng test"
   },
   "private": true,

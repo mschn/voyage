@@ -14,13 +14,13 @@ To start the dev environment:
 
 ```bash
 # start the node.js backend
-npm run server
+npm run start:server
 
 # build the ngx-voyage library in watch mode
-npm run watch
+npm run start:lib
 
 # build the voyage app in watch mode
-npm run start
+npm run start:app
 ```
 
 ## Built with
