@@ -3,9 +3,12 @@ const fs = require("fs");
 const path = require("path");
 const cors = require("cors");
 const mime = require("mime-types");
+const homedir = require("os").homedir();
 
 const app = express();
 const port = 3003;
+
+const FILES_ROOT = homedir;
 
 app.use(cors());
 
@@ -23,7 +26,10 @@ app.get("/api/version", (req, res) => {
 
 app.get("/api/ls", (req, res) => {
   const { folder } = req.query;
-  const folderPath = decodeURIComponent(folder);
+  const folderPath = path.join(FILES_ROOT, decodeURIComponent(folder));
+
+  console.log("folder", folderPath);
+
   const files = fs
     .readdirSync(folderPath)
     .map((p) => {
@@ -48,8 +54,9 @@ app.get("/api/ls", (req, res) => {
 
 app.get("/api/open", async (req, res) => {
   const { file } = req.query;
+  const filePath = path.join(FILES_ROOT, decodeURIComponent(file));
+
   try {
-    const filePath = decodeURIComponent(file);
     const stat = fs.statSync(filePath);
     if (!stat.isFile) {
       res.status(400).send({ error: `Not a file: ${filePath}` });
