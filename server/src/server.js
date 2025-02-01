@@ -8,7 +8,7 @@ const homedir = require("os").homedir();
 const app = express();
 const port = 3003;
 
-const FILES_ROOT = homedir;
+const FILES_ROOT = process.env.VOYAGE_ROOT ?? homedir;
 
 app.use(cors());
 
@@ -27,9 +27,6 @@ app.get("/api/version", (req, res) => {
 app.get("/api/ls", (req, res) => {
   const { folder } = req.query;
   const folderPath = path.join(FILES_ROOT, decodeURIComponent(folder));
-
-  console.log("folder", folderPath);
-
   const files = fs
     .readdirSync(folderPath)
     .map((p) => {
@@ -77,5 +74,5 @@ app.get("*", (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Voyage server listening on port ${port}`);
+  console.log(`Voyage server listening on port ${port} - root = ${FILES_ROOT}`);
 });
