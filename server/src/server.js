@@ -45,8 +45,6 @@ app.get("/api/ls/:paramPath", (req, res) => {
 });
 
 app.get("/api/open/:p", async (req, res) => {
-  console.log("OINK");
-
   const { p } = req.params;
   try {
     const paramPath = decodeURIComponent(p);
@@ -56,8 +54,6 @@ app.get("/api/open/:p", async (req, res) => {
       return;
     }
     const mimeType = mime.lookup(paramPath);
-    console.log(paramPath, mimeType);
-
     res.set("Content-Type", mimeType);
     const content = fs.readFileSync(paramPath); // TODO check large files
     res.send(content);
@@ -65,6 +61,10 @@ app.get("/api/open/:p", async (req, res) => {
     console.error(e);
     res.status(500).send({ error: "Internal server error", cause: e });
   }
+});
+
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "../../dist/voyage/browser/index.html"));
 });
 
 app.listen(port, () => {
