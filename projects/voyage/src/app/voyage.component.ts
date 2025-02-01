@@ -10,7 +10,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NavigationEnd, Router } from '@angular/router';
 import { File, NgxVoyageComponent } from 'ngx-voyage';
 import { filter } from 'rxjs';
-import { pathToUrl, urlToPath } from './model';
 
 @Component({
   selector: 'app-root',
@@ -20,10 +19,10 @@ import { pathToUrl, urlToPath } from './model';
 export class VoyageComponent {
   #router = inject(Router);
   #destroyRef = inject(DestroyRef);
-  path = signal<string[]>([]);
+  path = signal<string>('/');
 
   filesResource = resource({
-    request: () => encodeURIComponent('/' + this.path().join('/')),
+    request: () => encodeURIComponent(this.path()),
     loader: async ({ request, abortSignal }) => {
       const response = await fetch(
         `http://localhost:3003/api/ls?folder=${request}`,
@@ -56,19 +55,17 @@ export class VoyageComponent {
         takeUntilDestroyed(this.#destroyRef),
       )
       .subscribe((event) => {
-        const p = urlToPath(event.url);
-        this.path.set(p);
+        this.path.set(event.url);
       });
   }
 
-  openFolder(path: string[]) {
+  openFolder(path: string) {
     this.path.set(path);
-    const url = pathToUrl(path);
-    this.#router.navigateByUrl(url);
+    this.#router.navigateByUrl(path);
   }
 
-  openFile(path: string[]) {
-    const url = encodeURIComponent(pathToUrl(path));
+  openFile(path: string) {
+    const url = encodeURIComponent(path);
     window
       .open(`http://localhost:3003/api/open?file=${url}`, '_blank')
       ?.focus();

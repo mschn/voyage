@@ -1,7 +1,7 @@
 <div class="flex flex-col overflow-hidden h-full w-full">
   <ngx-voyage-title
     [path]="path()"
-    (navigate)="titleNavigate($event)"
+    (navigate)="openFolder.emit($event)"
   ></ngx-voyage-title>
 
   <div class="flex-1 p-3 pt-0 overflow-y-auto overflow-x-hidden">

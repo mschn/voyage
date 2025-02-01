@@ -12,24 +12,16 @@ import { TitleComponent } from '../title/title.component';
   styleUrl: 'ngx-voyage.component.css',
 })
 export class NgxVoyageComponent {
-  path = input.required<string[]>();
+  path = input.required<string>();
   files = input.required<File[]>();
 
-  openFolder = output<string[]>();
-  openFile = output<string[]>();
+  openFolder = output<string>();
+  openFile = output<string>();
 
   prettyBytes = prettyBytes;
 
-  titleNavigate(path: string) {
-    const paths = path
-      .split('/')
-      .slice(1)
-      .filter((p) => p !== '');
-    this.openFolder.emit(paths);
-  }
-
   onRowClick(file: File) {
-    const targetPath = [...this.path(), file.name];
+    const targetPath = `${this.path()}/${file.name}`.replaceAll('//', '/');
     if (file.isDirectory) {
       this.openFolder.emit(targetPath);
     } else {
