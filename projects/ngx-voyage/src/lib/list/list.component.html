@@ -8,8 +8,12 @@
 >
   <ng-template #header>
     <tr>
-      <th class="w-4/5">Name</th>
-      <th class="w-1/5">Size</th>
+      <th pSortableColumn="name" class="w-4/5"
+        >Name <p-sortIcon field="name"
+      /></th>
+      <th pSortableColumn="size" class="w-1/5"
+        >Size <p-sortIcon field="size"
+      /></th>
     </tr>
   </ng-template>
   <ng-template #body let-file>
