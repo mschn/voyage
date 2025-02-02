@@ -1,4 +1,4 @@
-import { NgClass } from '@angular/common';
+import { DatePipe, NgClass } from '@angular/common';
 import { Component, computed, inject, input, output } from '@angular/core';
 import { TableModule } from 'primeng/table';
 import { getFileIcon } from '../model/icon';
@@ -8,7 +8,7 @@ import { SettingsService } from '../services/settings.service';
 @Component({
   selector: 'ngx-voyage-list',
   templateUrl: './list.component.html',
-  imports: [NgClass, TableModule],
+  imports: [NgClass, TableModule, DatePipe],
 })
 export class ListComponent {
   #settingsService = inject(SettingsService);

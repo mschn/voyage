@@ -30,7 +30,11 @@ export class VoyageComponent {
           signal: abortSignal,
         },
       );
-      return (await response.json()) as File[];
+      const json = await response.json();
+      return json.map((file: File) => ({
+        ...file,
+        modifiedDate: new Date(file.modifiedDate),
+      })) as File[];
     },
   });
 

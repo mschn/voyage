@@ -38,7 +38,7 @@ app.get("/api/ls", (req, res) => {
           isFile: stat.isFile(),
           name: p,
           size: stat.size,
-          modifiedDate: stat.modifiedDate,
+          modifiedDate: stat.mtime,
         };
       } catch (e) {
         return undefined;

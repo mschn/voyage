@@ -8,11 +8,14 @@
 >
   <ng-template #header>
     <tr>
-      <th pSortableColumn="name" class="w-4/5"
+      <th pSortableColumn="name" class="max-w-0 w-3/5"
         >Name <p-sortIcon field="name"
       /></th>
       <th pSortableColumn="size" class="w-1/5"
         >Size <p-sortIcon field="size"
+      /></th>
+      <th pSortableColumn="modifiedDate" class="w-3/10"
+        >Date <p-sortIcon field="modifiedDate"
       /></th>
     </tr>
   </ng-template>
@@ -33,8 +36,16 @@
           <span class="truncate">{{ file.name }}</span>
         </div>
       </td>
-      <td [ngClass]="{ 'text-gray-500': file.name.startsWith('.') }">
+      <td
+        class="truncate"
+        [ngClass]="{ 'text-gray-500': file.name.startsWith('.') }"
+      >
         {{ prettyBytes(file.size) }}
+      </td>
+      <td>
+        <div class="truncate">
+          {{ file.modifiedDate | date: "medium" }}
+        </div>
       </td>
     </tr>
   </ng-template>
