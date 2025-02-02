@@ -39,3 +39,4 @@ npm run start:app
 
 - [Angular](https://angular.dev/)
 - [Tailwind](https://tailwindcss.com/)
+- [Primeng](https://primeng.org/)

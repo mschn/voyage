@@ -1,21 +1,10 @@
 import { Component, computed, input, output } from '@angular/core';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'ngx-voyage-title',
-  template: `
-    <div class="p-3 bg-gray-200 flex flex-row">
-      @for (fragment of pathWithRoot(); track fragment; let isLast = $last) {
-        <button
-          class="px-2 py-1 border border-r-0 last:border-r border-gray-400
-          bg-gray-300 hover:bg-gray-200 text-gray-800
-          transition duration-300
-           first:rounded-l-md last:rounded-r-md"
-          (click)="navigate.emit(fragment.path)"
-          >{{ fragment.name }}</button
-        >
-      }
-    </div>
-  `,
+  templateUrl: './title.component.html',
+  imports: [ButtonModule],
 })
 export class TitleComponent {
   path = input.required<string>();

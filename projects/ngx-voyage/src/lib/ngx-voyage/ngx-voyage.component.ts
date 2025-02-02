@@ -10,6 +10,9 @@ import { TitleComponent } from '../title/title.component';
   templateUrl: './ngx-voyage.component.html',
   encapsulation: ViewEncapsulation.None,
   styleUrl: 'ngx-voyage.component.css',
+  host: {
+    class: 'flex flex-col overflow-hidden',
+  },
 })
 export class NgxVoyageComponent {
   path = input.required<string>();
