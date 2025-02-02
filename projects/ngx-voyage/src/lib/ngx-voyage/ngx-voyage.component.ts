@@ -8,10 +8,16 @@ import { TitleComponent } from '../title/title.component';
   imports: [TitleComponent, ListComponent],
   templateUrl: './ngx-voyage.component.html',
   encapsulation: ViewEncapsulation.None,
-  styleUrl: 'ngx-voyage.component.css',
   host: {
     class: 'flex flex-col overflow-hidden',
   },
+  styleUrls: [
+    'ngx-voyage.component.css',
+    '../../../../../node_modules/@fortawesome/fontawesome-free/css/fontawesome.css',
+    '../../../../../node_modules/@fortawesome/fontawesome-free/css/solid.css',
+    '../../../../../node_modules/@fortawesome/fontawesome-free/css/regular.css',
+    '../../../../../node_modules/@fortawesome/fontawesome-free/css/brands.css',
+  ],
 })
 export class NgxVoyageComponent {
   path = input.required<string>();

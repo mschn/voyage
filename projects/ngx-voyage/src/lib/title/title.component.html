@@ -5,8 +5,13 @@
         (onClick)="navigate.emit(fragment.path)"
         variant="text"
         size="small"
-        >{{ fragment.name }}</p-button
       >
+        @if (fragment.path === "/") {
+          <i class="fa-solid fa-hard-drive"></i>
+        } @else {
+          {{ fragment.name }}
+        }
+      </p-button>
     }
   </div>
 </div>
