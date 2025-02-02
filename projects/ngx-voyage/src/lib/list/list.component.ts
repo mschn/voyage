@@ -1,9 +1,8 @@
 import { NgClass } from '@angular/common';
 import { Component, input, output } from '@angular/core';
-import { File } from '../model/model';
+import { File, getFileIcon } from '../model/model';
 import { prettyBytes } from '../model/utils';
 import { TableModule } from 'primeng/table';
-
 @Component({
   selector: 'ngx-voyage-list',
   templateUrl: './list.component.html',
@@ -17,6 +16,7 @@ export class ListComponent {
   openFile = output<string>();
 
   prettyBytes = prettyBytes;
+  getFileIcon = getFileIcon;
 
   onRowClick(file: File) {
     const targetPath = `${this.path()}/${file.name}`.replaceAll('//', '/');

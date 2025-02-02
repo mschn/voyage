@@ -24,9 +24,9 @@
           [ngClass]="{ 'text-gray-500': file.name.startsWith('.') }"
         >
           @if (file.isDirectory) {
-            <i class="fa-solid fa-folder-closed text-2xl"></i>
+            <i class="fa-solid fa-folder text-2xl"></i>
           } @else {
-            <i class="fa-regular fa-file text-2xl"></i>
+            <i class="fa-regular text-2xl {{ getFileIcon(file) }}"></i>
           }
           <span class="truncate">{{ file.name }}</span>
         </div>
