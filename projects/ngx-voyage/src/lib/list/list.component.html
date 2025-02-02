@@ -1,0 +1,29 @@
+<table class="w-full table-fixed">
+  @for (file of files(); track file.name) {
+    <tr
+      class="even:bg-gray-100"
+      [ngClass]="{ 'text-gray-500': file.name.startsWith('.') }"
+      (click)="onRowClick(file)"
+    >
+      <td class="p-2 rounded-l-md w-4/5">
+        <div class="flex flex-row gap-3 items-center">
+          <img
+            [src]="
+              file.isDirectory ? '../assets/folder.svg' : '../assets/file.svg'
+            "
+            class="h-8"
+          />
+          <span class="truncate">{{ file.name }}</span>
+        </div>
+      </td>
+
+      <td class="p-2 rounded-r-md w-1/5">
+        @if (file.isDirectory) {
+          --
+        } @else if (file.isFile) {
+          {{ prettyBytes(file.size) }}
+        }
+      </td>
+    </tr>
+  }
+</table>
