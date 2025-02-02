@@ -1,10 +1,18 @@
-import { Component, computed, input, output } from '@angular/core';
+import {
+  Component,
+  computed,
+  input,
+  output,
+  ViewEncapsulation,
+} from '@angular/core';
 import { ButtonModule } from 'primeng/button';
+import { PopoverModule } from 'primeng/popover';
+import { SettingsComponent } from '../settings/settings.component';
 
 @Component({
   selector: 'ngx-voyage-title',
   templateUrl: './title.component.html',
-  imports: [ButtonModule],
+  imports: [ButtonModule, PopoverModule, SettingsComponent],
 })
 export class TitleComponent {
   path = input.required<string>();

@@ -1,0 +1,12 @@
+<div class="p-3 flex flex-col">
+  <div class="flex flex-row gap-3">
+    <label for="showHiddenFiles">Show hidden files</label>
+    <p-toggleswitch
+      inputId="showHiddenFiles"
+      [ngModel]="settingsService.showHiddenFiles"
+      (ngModelChange)="
+        settingsService.showHiddenFiles.set(!settingsService.showHiddenFiles())
+      "
+    />
+  </div>
+</div>

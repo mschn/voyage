@@ -1,5 +1,5 @@
 <p-table
-  [value]="files()"
+  [value]="filteredFiles()"
   [scrollable]="true"
   scrollHeight="flex"
   stripedRows
@@ -23,11 +23,13 @@
           class="flex flex-row gap-3 items-center"
           [ngClass]="{ 'text-gray-500': file.name.startsWith('.') }"
         >
-          @if (file.isDirectory) {
-            <i class="fa-solid fa-folder text-2xl"></i>
-          } @else {
-            <i class="fa-regular text-2xl {{ getFileIcon(file) }}"></i>
-          }
+          <div class="w-6 text-center">
+            @if (file.isDirectory) {
+              <i class="fa-solid fa-folder text-2xl"></i>
+            } @else {
+              <i class="fa-regular text-2xl {{ getFileIcon(file) }}"></i>
+            }
+          </div>
           <span class="truncate">{{ file.name }}</span>
         </div>
       </td>
