@@ -1,12 +1,24 @@
-<table class="w-full table-fixed">
-  @for (file of files(); track file.name) {
-    <tr
-      class="even:bg-gray-100"
-      [ngClass]="{ 'text-gray-500': file.name.startsWith('.') }"
-      (click)="onRowClick(file)"
-    >
-      <td class="p-2 rounded-l-md w-4/5">
-        <div class="flex flex-row gap-3 items-center">
+<p-table
+  [value]="files()"
+  [scrollable]="true"
+  scrollHeight="flex"
+  stripedRows
+  selectionMode="single"
+  [tableStyle]="{ 'table-layout': 'fixed' }"
+>
+  <ng-template #header>
+    <tr>
+      <th class="w-4/5">Name</th>
+      <th class="w-1/5">Size</th>
+    </tr>
+  </ng-template>
+  <ng-template #body let-file>
+    <tr (click)="onRowClick(file)" class="cursor-pointer">
+      <td>
+        <div
+          class="flex flex-row gap-3 items-center"
+          [ngClass]="{ 'text-gray-500': file.name.startsWith('.') }"
+        >
           <img
             [src]="
               file.isDirectory ? '../assets/folder.svg' : '../assets/file.svg'
@@ -16,8 +28,7 @@
           <span class="truncate">{{ file.name }}</span>
         </div>
       </td>
-
-      <td class="p-2 rounded-r-md w-1/5">
+      <td [ngClass]="{ 'text-gray-500': file.name.startsWith('.') }">
         @if (file.isDirectory) {
           --
         } @else if (file.isFile) {
@@ -25,5 +36,5 @@
         }
       </td>
     </tr>
-  }
-</table>
+  </ng-template>
+</p-table>

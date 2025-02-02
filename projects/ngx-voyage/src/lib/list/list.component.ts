@@ -2,11 +2,12 @@ import { NgClass } from '@angular/common';
 import { Component, input, output } from '@angular/core';
 import { File } from '../model/model';
 import { prettyBytes } from '../model/utils';
+import { TableModule } from 'primeng/table';
 
 @Component({
   selector: 'ngx-voyage-list',
   templateUrl: './list.component.html',
-  imports: [NgClass],
+  imports: [NgClass, TableModule],
 })
 export class ListComponent {
   path = input.required<string>();
