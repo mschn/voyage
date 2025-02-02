@@ -33,11 +33,7 @@
         </div>
       </td>
       <td [ngClass]="{ 'text-gray-500': file.name.startsWith('.') }">
-        @if (file.isDirectory) {
-          --
-        } @else if (file.isFile) {
-          {{ prettyBytes(file.size) }}
-        }
+        {{ prettyBytes(file.size) }}
       </td>
     </tr>
   </ng-template>
