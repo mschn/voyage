@@ -12,6 +12,9 @@
           {{ fragment.name }}
         }
       </p-button>
+      @if (!isLast) {
+        <span class="text-gray-500">/</span>
+      }
     }
   </div>
 </div>
