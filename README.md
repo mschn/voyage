@@ -2,12 +2,6 @@
 
 Voyage is a file explorer in your browser.
 
-It consists of:
-
-- `ngx-voyage`, an Angular library that contains the File Explorer widget
-- `voyage`, an Angular web application that binds the UI to the server
-- A node.js server to read your local files
-
 ## Startup
 
 You can run Voyage in Docker with the following command:
@@ -17,8 +11,26 @@ docker run -d --rm \
     --name voyage \
     -p 3003:3003 \
     -v $HOME:/files \
+    -e VOYAGE_ROOT=/files \
     mschnr/voyage
 ```
+
+Alternatively you can write a `docker-compose.yml`:
+
+```yml
+services:
+  voyage:
+    image: "mschnr/voyage"
+    container_name: "voyage"
+    ports:
+      - "3003:3003"
+    volumes:
+      - "/home/mschn:/files"
+    environment:
+      VOYAGE_ROOT: "/files"
+```
+
+Then run `docker compose up -d`
 
 ## Development
 
