@@ -13,6 +13,7 @@ FROM node:18-alpine
 COPY --from=build /app/dist /app/dist
 WORKDIR /app/server
 COPY ./server/package*.json /app/server/
+COPY ./version.txt /app/
 RUN npm ci
 COPY ./server /app/server
 
