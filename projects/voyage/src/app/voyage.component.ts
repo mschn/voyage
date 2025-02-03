@@ -10,6 +10,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NavigationEnd, Router } from '@angular/router';
 import { File, NgxVoyageComponent } from 'ngx-voyage';
 import { filter } from 'rxjs';
+import { API_URL } from './model';
 
 @Component({
   selector: 'app-root',
@@ -24,12 +25,9 @@ export class VoyageComponent {
   filesResource = resource({
     request: () => encodeURIComponent(this.path()),
     loader: async ({ request, abortSignal }) => {
-      const response = await fetch(
-        `http://localhost:3003/api/ls?folder=${request}`,
-        {
-          signal: abortSignal,
-        },
-      );
+      const response = await fetch(`${API_URL}/ls?folder=${request}`, {
+        signal: abortSignal,
+      });
       const json = await response.json();
       return json.map((file: File) => ({
         ...file,
@@ -40,7 +38,7 @@ export class VoyageComponent {
 
   version = resource({
     loader: async () => {
-      const response = await fetch('http://localhost:3003/api/version');
+      const response = await fetch(`${API_URL}/version`);
       return await response.text();
     },
   });
@@ -70,8 +68,6 @@ export class VoyageComponent {
 
   openFile(path: string) {
     const url = encodeURIComponent(path);
-    window
-      .open(`http://localhost:3003/api/open?file=${url}`, '_blank')
-      ?.focus();
+    window.open(`${API_URL}/open?file=${url}`, '_blank')?.focus();
   }
 }
