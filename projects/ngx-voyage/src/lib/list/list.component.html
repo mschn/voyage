@@ -4,6 +4,7 @@
   scrollHeight="flex"
   stripedRows
   selectionMode="single"
+  [(selection)]="selectedFile"
   [tableStyle]="{ 'table-layout': 'fixed' }"
 >
   <ng-template #header>
@@ -20,7 +21,13 @@
     </tr>
   </ng-template>
   <ng-template #body let-file>
-    <tr (click)="onRowClick(file)" class="cursor-pointer">
+    <tr
+      class="cursor-pointer"
+      (contextmenu)="onContextMenu($event, file)"
+      [pSelectableRow]="file"
+      (dblclick)="openFileOrFolder(file)"
+      (click)="onRowClick($event, file)"
+    >
       <td>
         <div
           class="flex flex-row gap-3 items-center"
@@ -50,3 +57,5 @@
     </tr>
   </ng-template>
 </p-table>
+
+<p-contextmenu #cm [model]="menuItems"></p-contextmenu>

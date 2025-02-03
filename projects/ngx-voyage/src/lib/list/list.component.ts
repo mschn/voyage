@@ -1,27 +1,35 @@
-import { DatePipe, formatDate, NgClass } from '@angular/common';
+import { formatDate, NgClass } from '@angular/common';
 import {
   Component,
   computed,
+  effect,
   inject,
   input,
   LOCALE_ID,
+  model,
   output,
+  signal,
+  ViewChild,
 } from '@angular/core';
 import { isToday, isYesterday } from 'date-fns';
+import { MenuItem } from 'primeng/api';
+import { ContextMenu, ContextMenuModule } from 'primeng/contextmenu';
+import { DialogModule } from 'primeng/dialog';
 import { TableModule } from 'primeng/table';
 import { getFileIcon } from '../model/icon';
 import { File } from '../model/model';
 import { prettyBytes } from '../model/utils';
 import { SettingsService } from '../services/settings.service';
-
 @Component({
   selector: 'ngx-voyage-list',
   templateUrl: './list.component.html',
-  imports: [NgClass, TableModule, DatePipe],
+  imports: [NgClass, TableModule, ContextMenu, ContextMenuModule, DialogModule],
 })
 export class ListComponent {
   #locale = inject(LOCALE_ID);
   #settingsService = inject(SettingsService);
+
+  @ViewChild('cm') cm: ContextMenu | undefined = undefined;
 
   path = input.required<string>();
   files = input.required<File[]>();
@@ -39,12 +47,38 @@ export class ListComponent {
   prettyBytes = prettyBytes;
   getFileIcon = getFileIcon;
 
-  onRowClick(file: File) {
+  selectedFile = model<File | undefined>(undefined);
+
+  menuItems: MenuItem[] = [
+    {
+      label: 'Open',
+      command: (event) => {
+        const f = this.selectedFile();
+        f && this.openFileOrFolder(f);
+      },
+    },
+  ];
+
+  onRowClick(event: MouseEvent, file: File) {
+    if (event.ctrlKey || event.metaKey) {
+      this.openFileOrFolder(file);
+    }
+  }
+
+  openFileOrFolder(file: File) {
     const targetPath = `${this.path()}/${file.name}`.replaceAll('//', '/');
     if (file.isDirectory) {
       this.openFolder.emit(targetPath);
     } else {
       this.openFile.emit(targetPath);
+    }
+  }
+
+  onContextMenu(event: MouseEvent, file: File) {
+    if (this.cm && event?.currentTarget && file) {
+      this.selectedFile.set(file);
+      this.cm.target = event.currentTarget as HTMLElement;
+      this.cm.show(event);
     }
   }
 
