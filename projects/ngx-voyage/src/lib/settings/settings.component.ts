@@ -1,7 +1,7 @@
 import { Component, inject, model, signal } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
-import { SettingsService } from '../services/settings.service';
+import { Store } from '../model/store';
 
 @Component({
   selector: 'ngx-voyage-settings',
@@ -9,5 +9,5 @@ import { SettingsService } from '../services/settings.service';
   templateUrl: './settings.component.html',
 })
 export class SettingsComponent {
-  settingsService = inject(SettingsService);
+  store = inject(Store);
 }

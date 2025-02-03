@@ -19,7 +19,7 @@ import { TableModule } from 'primeng/table';
 import { getFileIcon } from '../model/icon';
 import { File } from '../model/model';
 import { prettyBytes } from '../model/utils';
-import { SettingsService } from '../services/settings.service';
+import { Store } from '../model/store';
 @Component({
   selector: 'ngx-voyage-list',
   templateUrl: './list.component.html',
@@ -27,14 +27,14 @@ import { SettingsService } from '../services/settings.service';
 })
 export class ListComponent {
   #locale = inject(LOCALE_ID);
-  #settingsService = inject(SettingsService);
+  #store = inject(Store);
 
   @ViewChild('cm') cm: ContextMenu | undefined = undefined;
 
   path = input.required<string>();
   files = input.required<File[]>();
   filteredFiles = computed(() => {
-    if (this.#settingsService.showHiddenFiles()) {
+    if (this.#store.showHiddenFiles()) {
       return this.files();
     } else {
       return this.files().filter(({ name }) => !name.startsWith('.'));

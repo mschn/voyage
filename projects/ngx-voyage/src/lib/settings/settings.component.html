@@ -3,10 +3,8 @@
     <label for="showHiddenFiles">Show hidden files</label>
     <p-toggleswitch
       inputId="showHiddenFiles"
-      [ngModel]="settingsService.showHiddenFiles"
-      (ngModelChange)="
-        settingsService.showHiddenFiles.set(!settingsService.showHiddenFiles())
-      "
+      [ngModel]="store.showHiddenFiles"
+      (ngModelChange)="store.toggleHiddenFiles()"
     />
   </div>
 </div>
