@@ -26,6 +26,7 @@
       (contextmenu)="onContextMenu($event, file)"
       [pSelectableRow]="file"
       (dblclick)="openFileOrFolder(file)"
+      (mousedown)="preventSelectionOnDblClick($event)"
       (click)="onRowClick($event, file)"
     >
       <td>

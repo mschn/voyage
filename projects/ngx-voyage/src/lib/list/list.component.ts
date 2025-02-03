@@ -65,6 +65,12 @@ export class ListComponent {
     }
   }
 
+  preventSelectionOnDblClick(event: MouseEvent) {
+    if (event.detail > 1) {
+      event.preventDefault();
+    }
+  }
+
   openFileOrFolder(file: File) {
     const targetPath = `${this.path()}/${file.name}`.replaceAll('//', '/');
     if (file.isDirectory) {
