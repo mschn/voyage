@@ -1,5 +1,7 @@
+import { File, getFileExtension } from './model';
+
 export function getFileIcon(file: File): string {
-  const ext = file.name.substring(file.name.lastIndexOf('.') + 1).toLowerCase();
+  const ext = getFileExtension(file);
   return iconPerExtension[ext] ?? 'fa-file';
 }
 

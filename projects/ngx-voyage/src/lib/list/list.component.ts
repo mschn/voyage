@@ -16,7 +16,7 @@ import { ContextMenu, ContextMenuModule } from 'primeng/contextmenu';
 import { DialogModule } from 'primeng/dialog';
 import { TableModule } from 'primeng/table';
 import { getFileIcon } from '../model/icon';
-import { File, FilePreviewOutput } from '../model/model';
+import { canPreviewFile, File, FilePreviewOutput } from '../model/model';
 import { Store } from '../model/store';
 import { prettyBytes } from '../model/utils';
 import { PreviewComponent } from '../preview/preview.component';
@@ -62,26 +62,20 @@ export class ListComponent {
 
   menuItems: MenuItem[] = [
     {
+      label: 'Preview',
+      visible: false,
+      command: () => {
+        const f = this.selectedFile();
+        if (f) {
+          this.openFilePreview(f);
+        }
+      },
+    },
+    {
       label: 'Open',
       command: (event) => {
         const f = this.selectedFile();
         f && this.openFileOrFolder(f);
-      },
-    },
-    {
-      label: 'Preview',
-      command: () => {
-        const f = this.selectedFile();
-        if (f) {
-          const path = this.getTargetPath(f);
-          this.previewFile.emit({
-            path,
-            cb: (url) => {
-              this.previewUrl.set(url);
-              this.showPreview.set(true);
-            },
-          });
-        }
       },
     },
   ];
@@ -98,6 +92,25 @@ export class ListComponent {
     }
   }
 
+  onDoubleClick(file: File) {
+    if (canPreviewFile(file)) {
+      this.openFilePreview(file);
+    } else {
+      this.openFileOrFolder(file);
+    }
+  }
+
+  openFilePreview(file: File) {
+    const path = this.getTargetPath(file);
+    this.previewFile.emit({
+      path,
+      cb: (url) => {
+        this.previewUrl.set(url);
+        this.showPreview.set(true);
+      },
+    });
+  }
+
   openFileOrFolder(file: File) {
     const targetPath = this.getTargetPath(file);
     if (file.isDirectory) {
@@ -110,6 +123,7 @@ export class ListComponent {
   onContextMenu(event: MouseEvent, file: File) {
     if (this.cm && event?.currentTarget && file) {
       this.selectedFile.set(file);
+      this.menuItems[0].visible = canPreviewFile(file);
       this.cm.target = event.currentTarget as HTMLElement;
       this.cm.show(event);
     }

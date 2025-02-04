@@ -25,7 +25,7 @@
       class="cursor-pointer"
       (contextmenu)="onContextMenu($event, file)"
       [pSelectableRow]="file"
-      (dblclick)="openFileOrFolder(file)"
+      (dblclick)="onDoubleClick(file)"
       (mousedown)="preventSelectionOnDblClick($event)"
       (click)="onRowClick($event, file)"
     >
