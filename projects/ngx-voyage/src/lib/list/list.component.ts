@@ -94,6 +94,7 @@ export class ListComponent {
 
   onDoubleClick(file: File) {
     if (canPreviewFile(file)) {
+      this.selectedFile.set(file);
       this.openFilePreview(file);
     } else {
       this.openFileOrFolder(file);
