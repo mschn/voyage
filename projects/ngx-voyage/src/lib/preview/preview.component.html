@@ -5,11 +5,10 @@
     </p-button>
     <h1 class="text-2xl text-gray-100">{{ name() }}</h1>
   </div>
-  <iframe
-    #iframe
-    class="mx-auto w-full lg:w-5xl xl:w-7xl"
-    width="1024px"
-    style="height: 90vh"
-    [title]="name()"
-  ></iframe>
+
+  @if (isPdf()) {
+    <ngx-voyage-pdf [data]="data()"></ngx-voyage-pdf>
+  } @else if (isImage()) {
+    <ngx-voyage-img [data]="data()"></ngx-voyage-img>
+  }
 </div>

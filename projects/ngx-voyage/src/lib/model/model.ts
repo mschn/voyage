@@ -10,7 +10,11 @@ export interface File {
 export type FilePreviewOutput = { path: string; cb: (data: any) => void };
 
 export function getFileExtension(file: File) {
-  return file.name.substring(file.name.lastIndexOf('.') + 1).toLowerCase();
+  return getExtension(file.name);
+}
+
+export function getExtension(name: string) {
+  return name.substring(name.lastIndexOf('.') + 1).toLowerCase();
 }
 
 export function canPreviewFile(file: File) {

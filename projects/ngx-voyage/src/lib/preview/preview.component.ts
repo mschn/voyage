@@ -1,40 +1,31 @@
-import {
-  AfterViewInit,
-  Component,
-  effect,
-  ElementRef,
-  HostListener,
-  input,
-  output,
-  viewChild,
-} from '@angular/core';
+import { Component, HostListener, input, output } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
+import { PdfComponent } from './pdf.component';
+import { getExtension } from '../model/model';
+import { ImgComponent } from './img.component';
 
 @Component({
   selector: 'ngx-voyage-preview',
-  imports: [ButtonModule],
+  imports: [ButtonModule, PdfComponent, ImgComponent],
   templateUrl: './preview.component.html',
 })
-export class PreviewComponent implements AfterViewInit {
+export class PreviewComponent {
   data = input.required<any>();
-  name = input<string>();
+  name = input.required<string>();
   close = output<void>();
-
-  iframe = viewChild<ElementRef<HTMLIFrameElement>>('iframe');
-
-  constructor() {
-    effect(() => {});
-  }
-
-  ngAfterViewInit(): void {
-    const objectUrl = URL.createObjectURL(this.data());
-    const elt = this.iframe()?.nativeElement;
-    if (elt) {
-      elt.src = objectUrl;
-    }
-  }
 
   @HostListener('document:keydown.escape', ['$event']) onKeydownHandler() {
     this.close.emit();
+  }
+
+  isPdf() {
+    return this.name()?.endsWith('.pdf');
+  }
+
+  isImage() {
+    // TODO move extensions to .model.ts
+    const imageExt = ['png', 'jpg', 'jpeg', 'gif', 'svg'];
+    const ext = getExtension(this.name());
+    return imageExt.includes(ext);
   }
 }

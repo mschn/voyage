@@ -64,7 +64,7 @@
 @let data = previewData();
 @if (showPreview() && data) {
   <ngx-voyage-preview
-    [name]="selectedFile()?.name"
+    [name]="selectedFile()?.name ?? ''"
     [data]="data"
     (close)="showPreview.set(false)"
   ></ngx-voyage-preview>
