@@ -1,4 +1,11 @@
-import { Component, computed, inject, input, output } from '@angular/core';
+import {
+  Component,
+  computed,
+  HostListener,
+  inject,
+  input,
+  output,
+} from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ButtonModule } from 'primeng/button';
 
@@ -17,4 +24,10 @@ export class PreviewComponent {
   safeUrl = computed(() =>
     this.#sanitizer.bypassSecurityTrustResourceUrl(this.url()),
   );
+
+  @HostListener('document:keydown.escape', ['$event']) onKeydownHandler(
+    event: KeyboardEvent,
+  ) {
+    this.close.emit();
+  }
 }
