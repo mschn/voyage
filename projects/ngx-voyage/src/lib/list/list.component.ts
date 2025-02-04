@@ -58,7 +58,7 @@ export class ListComponent {
   selectedFile = model<File | undefined>(undefined);
 
   showPreview = model(false);
-  previewUrl = signal<string | undefined>(undefined);
+  previewData = signal<any | undefined>(undefined);
 
   menuItems: MenuItem[] = [
     {
@@ -105,8 +105,8 @@ export class ListComponent {
     const path = this.getTargetPath(file);
     this.previewFile.emit({
       path,
-      cb: (url) => {
-        this.previewUrl.set(url);
+      cb: (data) => {
+        this.previewData.set(data);
         this.showPreview.set(true);
       },
     });

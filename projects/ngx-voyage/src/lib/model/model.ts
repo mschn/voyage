@@ -7,7 +7,7 @@ export interface File {
   modifiedDate: Date;
 }
 
-export type FilePreviewOutput = { path: string; cb: (url: string) => void };
+export type FilePreviewOutput = { path: string; cb: (data: any) => void };
 
 export function getFileExtension(file: File) {
   return file.name.substring(file.name.lastIndexOf('.') + 1).toLowerCase();

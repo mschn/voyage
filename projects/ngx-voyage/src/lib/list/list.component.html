@@ -61,11 +61,11 @@
 
 <p-contextmenu #cm [model]="menuItems"></p-contextmenu>
 
-@let url = previewUrl();
-@if (showPreview() && url) {
+@let data = previewData();
+@if (showPreview() && data) {
   <ngx-voyage-preview
     [name]="selectedFile()?.name"
-    [url]="url"
+    [data]="data"
     (close)="showPreview.set(false)"
   ></ngx-voyage-preview>
 }

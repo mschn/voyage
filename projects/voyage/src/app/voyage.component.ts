@@ -73,6 +73,9 @@ export class VoyageComponent {
 
   getFileContent({ path, cb }: FilePreviewOutput) {
     const url = encodeURIComponent(path);
-    cb(`${API_URL}/open/${url}`);
+    fetch(`${API_URL}/open/${url}`).then(async (value) => {
+      const blob = await value.blob();
+      cb(blob);
+    });
   }
 }

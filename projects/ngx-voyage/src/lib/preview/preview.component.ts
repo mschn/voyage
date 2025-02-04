@@ -1,12 +1,13 @@
 import {
+  AfterViewInit,
   Component,
-  computed,
+  effect,
+  ElementRef,
   HostListener,
-  inject,
   input,
   output,
+  viewChild,
 } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
 import { ButtonModule } from 'primeng/button';
 
 @Component({
@@ -14,20 +15,26 @@ import { ButtonModule } from 'primeng/button';
   imports: [ButtonModule],
   templateUrl: './preview.component.html',
 })
-export class PreviewComponent {
-  #sanitizer = inject(DomSanitizer);
-
-  url = input.required<string>();
+export class PreviewComponent implements AfterViewInit {
+  data = input.required<any>();
   name = input<string>();
   close = output<void>();
 
-  safeUrl = computed(() =>
-    this.#sanitizer.bypassSecurityTrustResourceUrl(this.url()),
-  );
+  iframe = viewChild<ElementRef<HTMLIFrameElement>>('iframe');
 
-  @HostListener('document:keydown.escape', ['$event']) onKeydownHandler(
-    event: KeyboardEvent,
-  ) {
+  constructor() {
+    effect(() => {});
+  }
+
+  ngAfterViewInit(): void {
+    const objectUrl = URL.createObjectURL(this.data());
+    const elt = this.iframe()?.nativeElement;
+    if (elt) {
+      elt.src = objectUrl;
+    }
+  }
+
+  @HostListener('document:keydown.escape', ['$event']) onKeydownHandler() {
     this.close.emit();
   }
 }
