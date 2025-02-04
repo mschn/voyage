@@ -60,3 +60,12 @@
 </p-table>
 
 <p-contextmenu #cm [model]="menuItems"></p-contextmenu>
+
+@let url = previewUrl();
+@if (showPreview() && url) {
+  <ngx-voyage-preview
+    [name]="selectedFile()?.name"
+    [url]="url"
+    (close)="showPreview.set(false)"
+  ></ngx-voyage-preview>
+}

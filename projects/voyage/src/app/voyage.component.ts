@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NavigationEnd, Router } from '@angular/router';
-import { File, NgxVoyageComponent } from 'ngx-voyage';
+import { File, FilePreviewOutput, NgxVoyageComponent } from 'ngx-voyage';
 import { filter } from 'rxjs';
 import { API_URL } from './model';
 
@@ -69,5 +69,10 @@ export class VoyageComponent {
   openFile(path: string) {
     const url = encodeURIComponent(path);
     window.open(`${API_URL}/open?file=${url}`, '_blank')?.focus();
+  }
+
+  getFileContent({ path, cb }: FilePreviewOutput) {
+    const url = encodeURIComponent(path);
+    cb(`${API_URL}/open?file=${url}`);
   }
 }

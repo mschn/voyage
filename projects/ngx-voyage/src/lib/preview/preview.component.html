@@ -1,0 +1,14 @@
+<div class="absolute top-0 left-0 z-10 w-full h-full bg-black/75 flex flex-col">
+  <div class="flex flex-row gap-3 bg-gray-900 p-3 items-center">
+    <p-button (onClick)="close.emit()">
+      <i class="fa-solid fa-close"></i> Close
+    </p-button>
+    <h1 class="text-2xl text-gray-100">{{ name() }}</h1>
+  </div>
+  <iframe
+    class="mx-auto w-full lg:w-5xl"
+    width="1024px"
+    style="height: 90vh"
+    [src]="safeUrl()"
+  ></iframe>
+</div>

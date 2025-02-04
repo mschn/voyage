@@ -2,7 +2,6 @@ import { formatDate, NgClass } from '@angular/common';
 import {
   Component,
   computed,
-  effect,
   inject,
   input,
   LOCALE_ID,
@@ -17,13 +16,21 @@ import { ContextMenu, ContextMenuModule } from 'primeng/contextmenu';
 import { DialogModule } from 'primeng/dialog';
 import { TableModule } from 'primeng/table';
 import { getFileIcon } from '../model/icon';
-import { File } from '../model/model';
-import { prettyBytes } from '../model/utils';
+import { File, FilePreviewOutput } from '../model/model';
 import { Store } from '../model/store';
+import { prettyBytes } from '../model/utils';
+import { PreviewComponent } from '../preview/preview.component';
 @Component({
   selector: 'ngx-voyage-list',
   templateUrl: './list.component.html',
-  imports: [NgClass, TableModule, ContextMenu, ContextMenuModule, DialogModule],
+  imports: [
+    NgClass,
+    TableModule,
+    ContextMenu,
+    ContextMenuModule,
+    DialogModule,
+    PreviewComponent,
+  ],
 })
 export class ListComponent {
   #locale = inject(LOCALE_ID);
@@ -43,11 +50,15 @@ export class ListComponent {
 
   openFolder = output<string>();
   openFile = output<string>();
+  previewFile = output<FilePreviewOutput>();
 
   prettyBytes = prettyBytes;
   getFileIcon = getFileIcon;
 
   selectedFile = model<File | undefined>(undefined);
+
+  showPreview = model(false);
+  previewUrl = signal<string | undefined>(undefined);
 
   menuItems: MenuItem[] = [
     {
@@ -55,6 +66,22 @@ export class ListComponent {
       command: (event) => {
         const f = this.selectedFile();
         f && this.openFileOrFolder(f);
+      },
+    },
+    {
+      label: 'Preview',
+      command: () => {
+        const f = this.selectedFile();
+        if (f) {
+          const path = this.getTargetPath(f);
+          this.previewFile.emit({
+            path,
+            cb: (url) => {
+              this.previewUrl.set(url);
+              this.showPreview.set(true);
+            },
+          });
+        }
       },
     },
   ];
@@ -72,7 +99,7 @@ export class ListComponent {
   }
 
   openFileOrFolder(file: File) {
-    const targetPath = `${this.path()}/${file.name}`.replaceAll('//', '/');
+    const targetPath = this.getTargetPath(file);
     if (file.isDirectory) {
       this.openFolder.emit(targetPath);
     } else {
@@ -97,5 +124,9 @@ export class ListComponent {
     } else {
       return `${formatDate(file.modifiedDate, 'd LLL YYYY', this.#locale)} at ${time}`;
     }
+  }
+
+  getTargetPath(file: File) {
+    return `${this.path()}/${file.name}`.replaceAll('//', '/');
   }
 }

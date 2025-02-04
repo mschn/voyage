@@ -6,3 +6,5 @@ export interface File {
   size: number;
   modifiedDate: Date;
 }
+
+export type FilePreviewOutput = { path: string; cb: (url: string) => void };

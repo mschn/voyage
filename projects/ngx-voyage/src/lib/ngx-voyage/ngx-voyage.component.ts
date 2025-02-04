@@ -1,6 +1,6 @@
 import { Component, input, output, ViewEncapsulation } from '@angular/core';
 import { ListComponent } from '../list/list.component';
-import { File } from '../model/model';
+import { File, FilePreviewOutput } from '../model/model';
 import { TitleComponent } from '../title/title.component';
 
 @Component({
@@ -24,4 +24,5 @@ export class NgxVoyageComponent {
   files = input.required<File[]>();
   openFolder = output<string>();
   openFile = output<string>();
+  previewFile = output<FilePreviewOutput>();
 }
