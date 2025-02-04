@@ -24,8 +24,8 @@ app.get("/api/version", (req, res) => {
   }
 });
 
-app.get("/api/ls", (req, res) => {
-  const { folder } = req.query;
+app.get("/api/ls/:folder", (req, res) => {
+  const { folder } = req.params;
   const folderPath = path.join(FILES_ROOT, decodeURIComponent(folder));
   const files = fs
     .readdirSync(folderPath)
@@ -49,8 +49,8 @@ app.get("/api/ls", (req, res) => {
   res.send(files);
 });
 
-app.get("/api/open", async (req, res) => {
-  const { file } = req.query;
+app.get("/api/open/:file", async (req, res) => {
+  const { file } = req.params;
   const filePath = path.join(FILES_ROOT, decodeURIComponent(file));
 
   try {

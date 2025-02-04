@@ -25,7 +25,7 @@ export class VoyageComponent {
   filesResource = resource({
     request: () => encodeURIComponent(this.path()),
     loader: async ({ request, abortSignal }) => {
-      const response = await fetch(`${API_URL}/ls?folder=${request}`, {
+      const response = await fetch(`${API_URL}/ls/${request}`, {
         signal: abortSignal,
       });
       const json = await response.json();
@@ -68,11 +68,11 @@ export class VoyageComponent {
 
   openFile(path: string) {
     const url = encodeURIComponent(path);
-    window.open(`${API_URL}/open?file=${url}`, '_blank')?.focus();
+    window.open(`${API_URL}/open/${url}`, '_blank')?.focus();
   }
 
   getFileContent({ path, cb }: FilePreviewOutput) {
     const url = encodeURIComponent(path);
-    cb(`${API_URL}/open?file=${url}`);
+    cb(`${API_URL}/open/${url}`);
   }
 }
