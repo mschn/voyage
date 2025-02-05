@@ -3,6 +3,7 @@ import {
   Component,
   ElementRef,
   input,
+  OnDestroy,
   viewChild,
 } from '@angular/core';
 
@@ -16,15 +17,21 @@ import {
     }
   `,
 })
-export class ImgComponent implements AfterViewInit {
+export class ImgComponent implements AfterViewInit, OnDestroy {
   data = input.required<Blob>();
   iframe = viewChild<ElementRef<HTMLIFrameElement>>('img');
 
+  objectUrl: string | undefined;
+
   ngAfterViewInit(): void {
-    const objectUrl = URL.createObjectURL(this.data());
+    this.objectUrl = URL.createObjectURL(this.data());
     const elt = this.iframe()?.nativeElement;
     if (elt) {
-      elt.src = objectUrl;
+      elt.src = this.objectUrl;
     }
+  }
+
+  ngOnDestroy() {
+    URL.revokeObjectURL(this.objectUrl!);
   }
 }

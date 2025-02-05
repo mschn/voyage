@@ -3,6 +3,7 @@ import {
   Component,
   ElementRef,
   input,
+  OnDestroy,
   viewChild,
 } from '@angular/core';
 
@@ -17,10 +18,10 @@ import {
     ></iframe>
   `,
 })
-export class PdfComponent implements AfterViewInit {
+export class PdfComponent implements AfterViewInit, OnDestroy {
   data = input.required<Blob>();
-
   iframe = viewChild<ElementRef<HTMLIFrameElement>>('iframe');
+  objectUrl?: string;
 
   ngAfterViewInit(): void {
     const objectUrl = URL.createObjectURL(this.data());
@@ -28,5 +29,9 @@ export class PdfComponent implements AfterViewInit {
     if (elt) {
       elt.src = objectUrl;
     }
+  }
+
+  ngOnDestroy() {
+    URL.revokeObjectURL(this.objectUrl!);
   }
 }
