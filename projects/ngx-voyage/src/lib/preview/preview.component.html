@@ -10,5 +10,7 @@
     <ngx-voyage-pdf [data]="data()"></ngx-voyage-pdf>
   } @else if (isImage()) {
     <ngx-voyage-img [data]="data()"></ngx-voyage-img>
+  } @else if (isText()) {
+    <ngx-voyage-text [data]="data()"></ngx-voyage-text>
   }
 </div>

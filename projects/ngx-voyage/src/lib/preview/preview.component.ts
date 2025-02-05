@@ -1,12 +1,14 @@
 import { Component, HostListener, input, output } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
-import { PdfComponent } from './pdf.component';
+import { ImageExtensions, TextExtensions } from '../model/file-types';
 import { getExtension } from '../model/model';
 import { ImgComponent } from './img.component';
+import { PdfComponent } from './pdf.component';
+import { TextComponent } from './text.component';
 
 @Component({
   selector: 'ngx-voyage-preview',
-  imports: [ButtonModule, PdfComponent, ImgComponent],
+  imports: [ButtonModule, PdfComponent, ImgComponent, TextComponent],
   templateUrl: './preview.component.html',
 })
 export class PreviewComponent {
@@ -23,9 +25,10 @@ export class PreviewComponent {
   }
 
   isImage() {
-    // TODO move extensions to .model.ts
-    const imageExt = ['png', 'jpg', 'jpeg', 'gif', 'svg'];
-    const ext = getExtension(this.name());
-    return imageExt.includes(ext);
+    return ImageExtensions.includes(getExtension(this.name()));
+  }
+
+  isText() {
+    return TextExtensions.includes(getExtension(this.name()));
   }
 }

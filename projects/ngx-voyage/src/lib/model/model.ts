@@ -16,9 +16,3 @@ export function getFileExtension(file: File) {
 export function getExtension(name: string) {
   return name.substring(name.lastIndexOf('.') + 1).toLowerCase();
 }
-
-export function canPreviewFile(file: File) {
-  const previewExtensions = ['pdf', 'jpg', 'jpeg', 'svg', 'html', 'png'];
-  const ext = getFileExtension(file);
-  return previewExtensions.includes(ext);
-}

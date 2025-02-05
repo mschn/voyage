@@ -5,6 +5,26 @@ export function getFileIcon(file: File): string {
   return iconPerExtension[ext] ?? 'fa-file';
 }
 
+export const ImageExtensions = ['png', 'jpg', 'jpeg', 'gif', 'svg'];
+export const TextExtensions = [
+  'css',
+  'html',
+  'ts',
+  'sh',
+  'js',
+  'xml',
+  'yml',
+  'yaml',
+  'md',
+  'txt',
+  'json',
+];
+export const PreviewExtensions = ['pdf', ...ImageExtensions, ...TextExtensions];
+
+export function canPreviewFile(file: File) {
+  return PreviewExtensions.includes(getFileExtension(file));
+}
+
 export const iconPerExtension: Record<string, string> = {
   css: 'fa-file-code',
   csv: 'fa-file-lines',
