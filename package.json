@@ -4,7 +4,6 @@
   "scripts": {
     "ng": "ng",
     "start:app": "ng serve voyage",
-    "start:lib": "ng build ngx-voyage --watch --configuration development",
     "start:server": "npm run start --prefix server",
     "build:lib": "ng build ngx-voyage",
     "build:app": "ng build voyage",

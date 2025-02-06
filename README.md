@@ -40,9 +40,6 @@ To start the dev environment:
 # start the node.js backend
 npm run start:server
 
-# build the ngx-voyage library in watch mode
-npm run start:lib
-
 # build the voyage app in watch mode
 npm run start:app
 ```

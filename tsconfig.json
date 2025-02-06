@@ -11,7 +11,7 @@
     "noFallthroughCasesInSwitch": true,
     "paths": {
       "ngx-voyage": [
-        "./dist/ngx-voyage"
+        "./projects/ngx-voyage/src/public-api.ts"
       ]
     },
     "skipLibCheck": true,
