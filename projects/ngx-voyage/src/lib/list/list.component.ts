@@ -2,6 +2,7 @@ import { formatDate, NgClass } from '@angular/common';
 import {
   Component,
   computed,
+  effect,
   inject,
   input,
   LOCALE_ID,
@@ -19,8 +20,12 @@ import { canPreviewFile, getFileIcon } from '../model/file-types';
 import {
   File,
   FilePreviewOutput,
-  FileSortKeys,
+  FileSortFields,
+  getSortFieldFromLocalstorage,
+  getSortOrderFromLocalstorage,
+  isFileSortField,
   sortFiles,
+  writeSortToLocalstorage,
 } from '../model/model';
 import { Store } from '../model/store';
 import { prettyBytes } from '../model/utils';
@@ -53,8 +58,8 @@ export class ListComponent {
       return this.files().filter(({ name }) => !name.startsWith('.'));
     }
   });
-  sortOrder = signal<number | undefined>(undefined);
-  sortField = signal<FileSortKeys | undefined>(undefined);
+  sortOrder = signal<number>(0);
+  sortField = signal<FileSortFields | undefined>(undefined);
   sortedFiles = computed(() => {
     if (this.sortOrder() == undefined || this.sortField() == undefined) {
       return this.filteredFiles();
@@ -98,6 +103,15 @@ export class ListComponent {
     },
   ];
 
+  constructor() {
+    this.sortField.set(getSortFieldFromLocalstorage());
+    this.sortOrder.set(getSortOrderFromLocalstorage());
+
+    effect(() => {
+      writeSortToLocalstorage(this.sortOrder(), this.sortField());
+    });
+  }
+
   onDoubleClick(file: File) {
     if (canPreviewFile(file)) {
       this.selectedFile.set(file);
@@ -138,13 +152,19 @@ export class ListComponent {
   }
 
   onSort(event: SortEvent) {
-    if (event.order === 1 && this.sortOrder() === -1) {
+    if (
+      event.order === 1 &&
+      this.sortOrder() === -1 &&
+      this.sortField() === event.field
+    ) {
       this.sortField.set(undefined);
-      this.sortOrder.set(undefined);
+      this.sortOrder.set(0);
       this.dataTable()?.reset();
     } else {
-      this.sortField.set(event.field as unknown as FileSortKeys);
-      this.sortOrder.set(event.order);
+      if (isFileSortField(event.field)) {
+        this.sortField.set(event.field);
+      }
+      this.sortOrder.set(event.order ?? 0);
     }
   }
 
