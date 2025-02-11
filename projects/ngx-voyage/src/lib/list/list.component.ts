@@ -8,15 +8,20 @@ import {
   model,
   output,
   signal,
-  ViewChild,
+  viewChild,
 } from '@angular/core';
 import { isToday, isYesterday } from 'date-fns';
-import { MenuItem } from 'primeng/api';
+import { MenuItem, SortEvent } from 'primeng/api';
 import { ContextMenu, ContextMenuModule } from 'primeng/contextmenu';
 import { DialogModule } from 'primeng/dialog';
-import { TableModule } from 'primeng/table';
+import { Table, TableModule } from 'primeng/table';
 import { canPreviewFile, getFileIcon } from '../model/file-types';
-import { File, FilePreviewOutput } from '../model/model';
+import {
+  File,
+  FilePreviewOutput,
+  FileSortKeys,
+  sortFiles,
+} from '../model/model';
 import { Store } from '../model/store';
 import { prettyBytes } from '../model/utils';
 import { PreviewComponent } from '../preview/preview.component';
@@ -36,7 +41,8 @@ export class ListComponent {
   #locale = inject(LOCALE_ID);
   #store = inject(Store);
 
-  @ViewChild('cm') cm: ContextMenu | undefined = undefined;
+  contextMenu = viewChild<ContextMenu>('contextMenu');
+  dataTable = viewChild<Table>('dataTable');
 
   path = input.required<string>();
   files = input.required<File[]>();
@@ -46,6 +52,18 @@ export class ListComponent {
     } else {
       return this.files().filter(({ name }) => !name.startsWith('.'));
     }
+  });
+  sortOrder = signal<number | undefined>(undefined);
+  sortField = signal<FileSortKeys | undefined>(undefined);
+  sortedFiles = computed(() => {
+    if (this.sortOrder() == undefined || this.sortField() == undefined) {
+      return this.filteredFiles();
+    }
+    return sortFiles(
+      [...this.filteredFiles()],
+      this.sortField(),
+      this.sortOrder(),
+    );
   });
 
   openFolder = output<string>();
@@ -80,18 +98,6 @@ export class ListComponent {
     },
   ];
 
-  onRowClick(event: MouseEvent, file: File) {
-    if (event.ctrlKey || event.metaKey) {
-      this.openFileOrFolder(file);
-    }
-  }
-
-  preventSelectionOnDblClick(event: MouseEvent) {
-    if (event.detail > 1) {
-      event.preventDefault();
-    }
-  }
-
   onDoubleClick(file: File) {
     if (canPreviewFile(file)) {
       this.selectedFile.set(file);
@@ -122,11 +128,23 @@ export class ListComponent {
   }
 
   onContextMenu(event: MouseEvent, file: File) {
-    if (this.cm && event?.currentTarget && file) {
+    const cm = this.contextMenu();
+    if (cm && event?.currentTarget && file) {
       this.selectedFile.set(file);
       this.menuItems[0].visible = canPreviewFile(file);
-      this.cm.target = event.currentTarget as HTMLElement;
-      this.cm.show(event);
+      cm.target = event.currentTarget as HTMLElement;
+      cm.show(event);
+    }
+  }
+
+  onSort(event: SortEvent) {
+    if (event.order === 1 && this.sortOrder() === -1) {
+      this.sortField.set(undefined);
+      this.sortOrder.set(undefined);
+      this.dataTable()?.reset();
+    } else {
+      this.sortField.set(event.field as unknown as FileSortKeys);
+      this.sortOrder.set(event.order);
     }
   }
 

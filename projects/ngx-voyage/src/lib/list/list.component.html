@@ -1,11 +1,15 @@
 <p-table
-  [value]="filteredFiles()"
+  #dataTable
+  [value]="sortedFiles()"
   [scrollable]="true"
   scrollHeight="flex"
   stripedRows
   selectionMode="single"
+  metaKeySelection="true"
   [(selection)]="selectedFile"
   [tableStyle]="{ 'table-layout': 'fixed' }"
+  [customSort]="true"
+  (sortFunction)="onSort($event)"
 >
   <ng-template #header>
     <tr>
@@ -26,8 +30,6 @@
       (contextmenu)="onContextMenu($event, file)"
       [pSelectableRow]="file"
       (dblclick)="onDoubleClick(file)"
-      (mousedown)="preventSelectionOnDblClick($event)"
-      (click)="onRowClick($event, file)"
     >
       <td>
         <div
@@ -59,7 +61,7 @@
   </ng-template>
 </p-table>
 
-<p-contextmenu #cm [model]="menuItems"></p-contextmenu>
+<p-contextmenu #contextMenu [model]="menuItems"></p-contextmenu>
 
 @let data = previewData();
 @if (showPreview() && data) {
