@@ -16,6 +16,9 @@ COPY ./server/package*.json /app/server/
 COPY ./version.txt /app/
 RUN npm ci
 COPY ./server /app/server
+RUN npx tsc
+RUN npm prune --production
+
 
 EXPOSE 3003
-ENTRYPOINT ["node", "src/server.js"]
+ENTRYPOINT ["node", "dist/server.js"]

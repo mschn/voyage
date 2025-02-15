@@ -1,9 +1,11 @@
-const express = require("express");
-const fs = require("fs");
-const path = require("path");
-const cors = require("cors");
-const mime = require("mime-types");
-const homedir = require("os").homedir();
+import express from 'express';
+import fs from 'fs';
+import path from 'path';
+import cors from 'cors';
+import os from 'os';
+
+const mime = require('mime-types');
+const homedir = os.homedir();
 
 const app = express();
 const port = 3003;
@@ -12,19 +14,19 @@ const FILES_ROOT = process.env.VOYAGE_ROOT ?? homedir;
 
 app.use(cors());
 
-app.use(express.static("../dist/voyage/browser/"));
+app.use(express.static('../dist/voyage/browser/'));
 
-app.get("/api/version", (req, res) => {
-  const versionFile = path.join(__dirname, "..", "..", "version.txt");
+app.get('/api/version', (req, res) => {
+  const versionFile = path.join(__dirname, '..', '..', 'version.txt');
   try {
     const file = fs.readFileSync(versionFile);
-    res.send(file.toString("utf8"));
+    res.send(file.toString('utf8'));
   } catch (e) {
-    res.send("0.0.0");
+    res.send('0.0.0');
   }
 });
 
-app.get("/api/ls/:folder", (req, res) => {
+app.get('/api/ls/:folder', (req, res) => {
   const { folder } = req.params;
   const folderPath = path.join(FILES_ROOT, decodeURIComponent(folder));
   const files = fs
@@ -49,7 +51,7 @@ app.get("/api/ls/:folder", (req, res) => {
   res.send(files);
 });
 
-app.get("/api/open/:file", async (req, res) => {
+app.get('/api/open/:file', async (req, res) => {
   const { file } = req.params;
   const filePath = path.join(FILES_ROOT, decodeURIComponent(file));
 
@@ -60,17 +62,17 @@ app.get("/api/open/:file", async (req, res) => {
       return;
     }
     const mimeType = mime.lookup(filePath);
-    res.set("Content-Type", mimeType);
+    res.set('Content-Type', mimeType);
     const content = fs.readFileSync(filePath); // TODO check large files
     res.send(content);
   } catch (e) {
     console.error(e);
-    res.status(500).send({ error: "Internal server error", cause: e });
+    res.status(500).send({ error: 'Internal server error', cause: e });
   }
 });
 
-app.get("*", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "../../dist/voyage/browser/index.html"));
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../../dist/voyage/browser/index.html'));
 });
 
 app.listen(port, () => {
