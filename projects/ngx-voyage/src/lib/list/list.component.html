@@ -66,12 +66,20 @@
   <ng-template #emptymessage>
     <tr>
       <td colspan="3">
-        <div
+        @if (message()) {
+          <ngx-voyage-message [message]="message()"></ngx-voyage-message>
+        } @else {
+          <ngx-voyage-message
+            [message]="{ text: 'This folder is empty', type: 'info' }"
+          ></ngx-voyage-message>
+        }
+
+        <!-- <div
           class="flex gap-3 items-center text-lg text-gray-500 justify-center my-6"
         >
           <i class="fa-regular fa-folder"></i>
           This folder is empty
-        </div>
+        </div> -->
       </td>
     </tr>
   </ng-template>

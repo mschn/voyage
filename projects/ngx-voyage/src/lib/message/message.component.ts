@@ -6,7 +6,7 @@ import { Message } from 'ngx-voyage';
   template: `
     @if (message()) {
       <div
-        class="p-4 border-b-2 {{ bgColor }} {{
+        class="p-4 border rounded-md {{ bgColor }} {{
           textColor
         }} flex gap-2 items-center"
       >
@@ -31,8 +31,8 @@ export class MessageComponent {
       icon: 'fa-triangle-exclamation',
     },
     info: {
-      bg: 'bg-blue-100',
-      text: 'text-blue-700',
+      bg: 'bg-gray-100',
+      text: 'text-gray-700',
       icon: 'fa-circle-info',
     },
   };

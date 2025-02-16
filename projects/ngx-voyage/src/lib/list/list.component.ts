@@ -24,12 +24,14 @@ import {
   getSortFieldFromLocalstorage,
   getSortOrderFromLocalstorage,
   isFileSortField,
+  Message,
   sortFiles,
   writeSortToLocalstorage,
 } from '../model/model';
 import { Store } from '../model/store';
 import { prettyBytes } from '../model/utils';
 import { PreviewComponent } from '../preview/preview.component';
+import { MessageComponent } from '../message/message.component';
 @Component({
   selector: 'ngx-voyage-list',
   templateUrl: './list.component.html',
@@ -40,6 +42,7 @@ import { PreviewComponent } from '../preview/preview.component';
     ContextMenuModule,
     DialogModule,
     PreviewComponent,
+    MessageComponent,
   ],
 })
 export class ListComponent {
@@ -51,6 +54,7 @@ export class ListComponent {
 
   path = input.required<string>();
   files = input.required<File[]>();
+  message = input<Message>();
 
   filteredFiles = computed(() => {
     if (this.#store.showHiddenFiles()) {
