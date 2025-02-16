@@ -26,13 +26,14 @@
       /></th>
     </tr>
   </ng-template>
-  <ng-template #body let-file>
+  <ng-template #body let-file let-rowIndex="rowIndex">
     <tr
       class="cursor-pointer"
       (contextmenu)="onContextMenu($event, file)"
       [pSelectableRow]="file"
       (dblclick)="onDoubleClick(file)"
       (mousedown)="onMouseDown($event)"
+      [attr.data-rowIndex]="rowIndex"
     >
       <td>
         <div
@@ -73,13 +74,6 @@
             [message]="{ text: 'This folder is empty', type: 'info' }"
           ></ngx-voyage-message>
         }
-
-        <!-- <div
-          class="flex gap-3 items-center text-lg text-gray-500 justify-center my-6"
-        >
-          <i class="fa-regular fa-folder"></i>
-          This folder is empty
-        </div> -->
       </td>
     </tr>
   </ng-template>

@@ -3,6 +3,7 @@ import {
   Component,
   computed,
   effect,
+  HostListener,
   inject,
   input,
   LOCALE_ID,
@@ -23,6 +24,7 @@ import {
   FileSortFields,
   getSortFieldFromLocalstorage,
   getSortOrderFromLocalstorage,
+  isFileEqual,
   isFileSortField,
   Message,
   sortFiles,
@@ -179,6 +181,56 @@ export class ListComponent {
       }
       this.sortOrder.set(event.order ?? 0);
     }
+  }
+
+  @HostListener('window:keydown', ['$event'])
+  onKeydown(event: KeyboardEvent) {
+    const selected = this.selectedFile();
+    if (event.key === 'ArrowUp') {
+      this.selectFileWithOffset(-1);
+    }
+    if (event.key === 'ArrowDown') {
+      this.selectFileWithOffset(1);
+    }
+    if (event.key === 'Enter' && selected) {
+      this.onDoubleClick(selected);
+    }
+  }
+
+  selectFileWithOffset(offset: -1 | 1) {
+    const selected = this.selectedFile();
+    if (selected == undefined) {
+      this.selectFirstFile();
+    } else {
+      for (let i = 0; i < this.sortedFiles().length; i++) {
+        const file = this.sortedFiles()[i];
+        if (
+          isFileEqual(file, selected) &&
+          i + offset >= 0 &&
+          i + offset < this.sortedFiles().length
+        ) {
+          this.selectFile(this.sortedFiles()[i + offset]);
+          break;
+        }
+      }
+    }
+  }
+
+  selectFirstFile() {
+    this.selectFile(this.sortedFiles()[0]);
+  }
+
+  selectFile(file: File) {
+    for (let i = 0; i < this.sortedFiles().length; i++) {
+      const f = this.sortedFiles()[i];
+      if (isFileEqual(file, f)) {
+        const fileDom = document.querySelector(
+          `tr[data-rowIndex="${i}"]`,
+        ) as HTMLTableRowElement;
+        fileDom.focus();
+      }
+    }
+    this.selectedFile.set(file);
   }
 
   formatDate(file: File) {

@@ -14,6 +14,15 @@ export interface Message {
 
 export type FileSortFields = 'name' | 'size' | 'modifiedDate';
 
+export function isFileEqual(f1: File, f2: File) {
+  return (
+    f1.name === f2.name &&
+    f1.isDirectory === f2.isDirectory &&
+    f1.isFile === f2.isFile &&
+    f1.size === f2.size
+  );
+}
+
 export function isFileSortField(
   field?: string | null,
 ): field is FileSortFields {
