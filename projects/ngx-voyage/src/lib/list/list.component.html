@@ -61,6 +61,19 @@
       </td>
     </tr>
   </ng-template>
+
+  <ng-template #emptymessage>
+    <tr>
+      <td colspan="3">
+        <div
+          class="flex gap-3 items-center text-lg text-gray-500 justify-center my-6"
+        >
+          <i class="fa-regular fa-folder"></i>
+          This folder is empty
+        </div>
+      </td>
+    </tr>
+  </ng-template>
 </p-table>
 
 <p-contextmenu #contextMenu [model]="menuItems"></p-contextmenu>
