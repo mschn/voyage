@@ -29,26 +29,32 @@ app.get('/api/version', (req, res) => {
 app.get('/api/ls/:folder', (req, res) => {
   const { folder } = req.params;
   const folderPath = path.join(FILES_ROOT, decodeURIComponent(folder));
-  const files = fs
-    .readdirSync(folderPath)
-    .map((p) => {
-      try {
-        const filePaath = path.join(folderPath, p);
-        const stat = fs.statSync(filePaath);
-        return {
-          isDirectory: stat.isDirectory(),
-          isFile: stat.isFile(),
-          name: p,
-          size: stat.size,
-          modifiedDate: stat.mtime,
-        };
-      } catch (e) {
-        return undefined;
-      }
-    })
-    .filter((o) => o != undefined);
-  console.log(`GET /api/ls ${folderPath} ${files.length} files`);
-  res.send(files);
+
+  try {
+    const files = fs
+      .readdirSync(folderPath)
+      .map((p) => {
+        try {
+          const filePaath = path.join(folderPath, p);
+          const stat = fs.statSync(filePaath);
+          return {
+            isDirectory: stat.isDirectory(),
+            isFile: stat.isFile(),
+            name: p,
+            size: stat.size,
+            modifiedDate: stat.mtime,
+          };
+        } catch (e) {
+          return undefined;
+        }
+      })
+      .filter((o) => o != undefined);
+    console.log(`GET /api/ls ${folderPath} ${files.length} files`);
+    res.send(files);
+  } catch (err) {
+    console.error(`GET /api/ls ${folderPath} ${err}`);
+    res.status(500).send({ error: `${err}`, cause: err });
+  }
 });
 
 app.get('/api/open/:file', async (req, res) => {
@@ -64,9 +70,10 @@ app.get('/api/open/:file', async (req, res) => {
     const mimeType = mime.lookup(filePath);
     res.set('Content-Type', mimeType);
     const content = fs.readFileSync(filePath); // TODO check large files
+    console.error(`GET /api/open/${file} ${content.length} bytes`);
     res.send(content);
   } catch (e) {
-    console.error(e);
+    console.error(`GET /api/open/${file} ${e}`);
     res.status(500).send({ error: 'Internal server error', cause: e });
   }
 });

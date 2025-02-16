@@ -10,7 +10,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NavigationEnd, Router } from '@angular/router';
 import { File, FilePreviewOutput, NgxVoyageComponent } from 'ngx-voyage';
 import { filter } from 'rxjs';
-import { API_URL } from './model';
+import { API_URL, isMessage } from './model';
 
 @Component({
   selector: 'app-root',
@@ -29,6 +29,13 @@ export class VoyageComponent {
         signal: abortSignal,
       });
       const json = await response.json();
+
+      if (json.error) {
+        return {
+          text: json.error,
+          type: 'error',
+        };
+      }
       return json.map((file: File) => ({
         ...file,
         modifiedDate: new Date(file.modifiedDate),
@@ -43,9 +50,18 @@ export class VoyageComponent {
     },
   });
 
+  message = computed(() => {
+    const value = this.filesResource.value();
+    if (isMessage(value)) {
+      return value;
+    }
+    return undefined;
+  });
+
   files = computed<File[]>(() => {
-    if (this.filesResource.hasValue()) {
-      return this.filesResource.value() ?? [];
+    const value = this.filesResource.value();
+    if (this.filesResource.hasValue() && Array.isArray(value)) {
+      return value ?? [];
     }
     return [];
   });

@@ -7,6 +7,11 @@ export interface File {
   modifiedDate: Date;
 }
 
+export interface Message {
+  text: string;
+  type: 'info' | 'warn' | 'error';
+}
+
 export type FileSortFields = 'name' | 'size' | 'modifiedDate';
 
 export function isFileSortField(

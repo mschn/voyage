@@ -51,6 +51,7 @@ export class ListComponent {
 
   path = input.required<string>();
   files = input.required<File[]>();
+
   filteredFiles = computed(() => {
     if (this.#store.showHiddenFiles()) {
       return this.files();

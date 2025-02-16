@@ -4,6 +4,8 @@
     (navigate)="openFolder.emit($event)"
   ></ngx-voyage-title>
 
+  <ngx-voyage-message [message]="message()"></ngx-voyage-message>
+
   <div class="flex-1 pt-0 overflow-y-auto overflow-x-hidden">
     <ngx-voyage-list
       [path]="path()"
