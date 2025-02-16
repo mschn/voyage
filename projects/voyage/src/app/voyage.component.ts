@@ -8,9 +8,14 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NavigationEnd, Router } from '@angular/router';
-import { File, FilePreviewOutput, NgxVoyageComponent } from 'ngx-voyage';
+import {
+  File,
+  FilePreviewOutput,
+  NgxVoyageComponent,
+  isMessage,
+} from 'ngx-voyage';
 import { filter } from 'rxjs';
-import { API_URL, isMessage } from './model';
+import { API_URL } from './model';
 
 @Component({
   selector: 'app-root',

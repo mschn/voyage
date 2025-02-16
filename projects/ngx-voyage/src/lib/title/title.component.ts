@@ -1,10 +1,4 @@
-import {
-  Component,
-  computed,
-  input,
-  output,
-  ViewEncapsulation,
-} from '@angular/core';
+import { Component, computed, input, output } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { PopoverModule } from 'primeng/popover';
 import { SettingsComponent } from '../settings/settings.component';

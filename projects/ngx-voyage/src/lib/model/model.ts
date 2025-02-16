@@ -7,11 +7,6 @@ export interface File {
   modifiedDate: Date;
 }
 
-export interface Message {
-  text: string;
-  type: 'info' | 'warn' | 'error';
-}
-
 export type FileSortFields = 'name' | 'size' | 'modifiedDate';
 
 export function isFileEqual(f1: File, f2: File) {
@@ -60,39 +55,4 @@ export function sortFiles(
     else result = value1 < value2 ? -1 : value1 > value2 ? 1 : 0;
     return order * result;
   });
-}
-
-export const LocalstorageKeys = {
-  sort: 'VOYAGE_SORT_ORDER',
-  field: 'VOYAGE_SORT_FIELD',
-};
-
-export function getSortOrderFromLocalstorage(): number {
-  const storageSort = localStorage.getItem(LocalstorageKeys.sort);
-  if (storageSort == null) {
-    return 0;
-  }
-  const sort = Number.parseInt(storageSort);
-  if (isNaN(sort)) {
-    return 0;
-  }
-  return sort;
-}
-
-export function getSortFieldFromLocalstorage(): FileSortFields | undefined {
-  const storageField = localStorage.getItem(LocalstorageKeys.field);
-  if (isFileSortField(storageField)) {
-    return storageField;
-  }
-  return undefined;
-}
-
-export function writeSortToLocalstorage(
-  order: number | undefined,
-  field: string | undefined,
-) {
-  localStorage.setItem(LocalstorageKeys.field, `${field}`);
-  localStorage.setItem(LocalstorageKeys.sort, `${order}`);
-
-  console.log('sync to localstorage', order, field);
 }

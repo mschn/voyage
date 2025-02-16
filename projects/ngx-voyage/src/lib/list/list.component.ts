@@ -22,18 +22,20 @@ import {
   File,
   FilePreviewOutput,
   FileSortFields,
-  getSortFieldFromLocalstorage,
-  getSortOrderFromLocalstorage,
   isFileEqual,
   isFileSortField,
-  Message,
   sortFiles,
-  writeSortToLocalstorage,
 } from '../model/model';
 import { Store } from '../model/store';
 import { prettyBytes } from '../model/utils';
 import { PreviewComponent } from '../preview/preview.component';
 import { MessageComponent } from '../message/message.component';
+import { Message } from '../model/message';
+import {
+  getSortFieldFromLocalstorage,
+  getSortOrderFromLocalstorage,
+  writeSortToLocalstorage,
+} from '../model/localstorage';
 @Component({
   selector: 'ngx-voyage-list',
   templateUrl: './list.component.html',
