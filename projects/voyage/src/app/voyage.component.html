@@ -1,4 +1,13 @@
-<div class="h-full w-full flex flex-col">
+<div class="h-full w-full flex flex-row">
+  <div class="p-3 px-2 bg-gray-200 flex flex-col items-center">
+    <div class="font-bold font-serif text-2xl">V</div>
+    <div class="text-sm text-gray-500 mt-auto">
+      <a href="https://github.com/mschn/voyage" target="_blank"
+        >{{ version.value() }}
+      </a>
+    </div>
+  </div>
+
   <ngx-voyage
     class="flex-1"
     [path]="path()"
@@ -8,10 +17,4 @@
     (openFile)="openFile($event)"
     (previewFile)="getFileContent($event)"
   ></ngx-voyage>
-  <div
-    class="p-3 text-right text-sm bg-gray-100 text-gray-500 border-t border-gray-200"
-    ><a href="https://github.com/mschn/voyage" target="_blank"
-      >Voyage {{ version.value() }}</a
-    ></div
-  >
 </div>
