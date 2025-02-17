@@ -2,6 +2,8 @@
 
 Voyage is a file explorer in your browser.
 
+<img src="projects/voyage/public/voyage.svg" width="96" />
+
 ## Startup
 
 You can run Voyage in Docker with the following command:
