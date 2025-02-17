@@ -7,7 +7,7 @@
   selectionMode="single"
   metaKeySelection="true"
   [(selection)]="selectedFile"
-  [tableStyle]="{ 'table-layout': 'fixed' }"
+  tableStyleClass="table-fixed"
   [customSort]="true"
   (sortFunction)="onSort($event)"
   [sortField]="sortField()"
@@ -66,7 +66,7 @@
 
   <ng-template #emptymessage>
     <tr>
-      <td colspan="3">
+      <td colspan="3" class="bg-white !border-b-0">
         @if (message()) {
           <ngx-voyage-message [message]="message()"></ngx-voyage-message>
         } @else {
