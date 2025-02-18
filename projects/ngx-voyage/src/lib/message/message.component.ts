@@ -1,5 +1,5 @@
 import { Component, computed, input } from '@angular/core';
-import { Message } from 'ngx-voyage';
+import { Message } from '../model/message';
 
 @Component({
   selector: 'ngx-voyage-message',

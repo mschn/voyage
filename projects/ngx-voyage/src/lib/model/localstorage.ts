@@ -1,4 +1,4 @@
-import { FileSortFields, isFileSortField } from 'ngx-voyage';
+import { FileSortFields, isFileSortField } from './model';
 
 export const LocalstorageKeys = {
   sort: 'VOYAGE_SORT_ORDER',
