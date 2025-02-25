@@ -1,11 +1,7 @@
 <div class="flex flex-row items-center">
   <div class="bg-white rounded-lg w-full p-1">
     @for (fragment of pathWithRoot(); track fragment; let isLast = $last) {
-      <p-button
-        (onClick)="navigate.emit(fragment.path)"
-        variant="text"
-        size="small"
-      >
+      <p-button (onClick)="navigate.emit(fragment.path)" variant="text">
         @if (fragment.path === "/") {
           <i class="fa-solid fa-desktop text-gray-600"></i>
         } @else {
