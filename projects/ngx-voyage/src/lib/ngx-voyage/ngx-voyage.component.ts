@@ -1,12 +1,13 @@
 import { Component, input, output, ViewEncapsulation } from '@angular/core';
+import { ProgressBarModule } from 'primeng/progressbar';
 import { ListComponent } from '../list/list.component';
-import { File, FilePreviewOutput } from '../model/model';
 import { Message } from '../model/message';
+import { File, FilePreviewOutput } from '../model/model';
 import { TitleComponent } from '../title/title.component';
 
 @Component({
   selector: 'ngx-voyage',
-  imports: [TitleComponent, ListComponent],
+  imports: [TitleComponent, ListComponent, ProgressBarModule],
   templateUrl: './ngx-voyage.component.html',
   encapsulation: ViewEncapsulation.None,
   host: {
@@ -24,6 +25,7 @@ export class NgxVoyageComponent {
   path = input.required<string>();
   files = input.required<File[]>();
   message = input<Message>();
+  loading = input<boolean>(false);
 
   openFolder = output<string>();
   openFile = output<string>();

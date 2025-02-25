@@ -69,6 +69,8 @@
       <td colspan="3" class="bg-white !border-b-0">
         @if (message()) {
           <ngx-voyage-message [message]="message()"></ngx-voyage-message>
+        } @else if (loading()) {
+          <p-progressbar mode="indeterminate" styleClass="!h-2" />
         } @else {
           <ngx-voyage-message
             [message]="{ text: 'This folder is empty', type: 'info' }"

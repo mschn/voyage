@@ -36,6 +36,8 @@ import {
   getSortOrderFromLocalstorage,
   writeSortToLocalstorage,
 } from '../model/localstorage';
+import { ProgressBarModule } from 'primeng/progressbar';
+
 @Component({
   selector: 'ngx-voyage-list',
   templateUrl: './list.component.html',
@@ -47,6 +49,7 @@ import {
     DialogModule,
     PreviewComponent,
     MessageComponent,
+    ProgressBarModule,
   ],
 })
 export class ListComponent {
@@ -59,6 +62,7 @@ export class ListComponent {
   path = input.required<string>();
   files = input.required<File[]>();
   message = input<Message>();
+  loading = input<boolean>(false);
 
   filteredFiles = computed(() => {
     if (this.#store.showHiddenFiles()) {
