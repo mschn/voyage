@@ -2,7 +2,7 @@ import { Component, input, output, ViewEncapsulation } from '@angular/core';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { ListComponent } from '../list/list.component';
 import { Message } from '../model/message';
-import { File, FilePreviewOutput } from '../model/model';
+import { addType, File, FilePreviewOutput } from '../model/model';
 import { TitleComponent } from '../title/title.component';
 
 @Component({
@@ -23,7 +23,12 @@ import { TitleComponent } from '../title/title.component';
 })
 export class NgxVoyageComponent {
   path = input.required<string>();
-  files = input.required<File[]>();
+  files = input.required<File[], File[]>({
+    transform: (files) => {
+      files.forEach((f) => addType(f));
+      return files;
+    },
+  });
   message = input<Message>();
   loading = input<boolean>(false);
 

@@ -16,14 +16,17 @@
   <ng-template #header>
     <tr>
       <th pSortableColumn="name" class="max-w-0 w-3/5"
-        >Name <p-sortIcon field="name"
-      /></th>
+        >Name <p-sortIcon field="name" />
+      </th>
       <th pSortableColumn="size" class="w-1/5"
-        >Size <p-sortIcon field="size"
-      /></th>
+        >Size <p-sortIcon field="size" />
+      </th>
+      <th pSortableColumn="type" class="w-1/5"
+        >Type <p-sortIcon field="type" />
+      </th>
       <th pSortableColumn="modifiedDate" class="w-3/10"
-        >Date <p-sortIcon field="modifiedDate"
-      /></th>
+        >Date <p-sortIcon field="modifiedDate" />
+      </th>
     </tr>
   </ng-template>
   <ng-template #body let-file let-rowIndex="rowIndex">
@@ -55,6 +58,9 @@
         [ngClass]="{ 'text-gray-500': file.name.startsWith('.') }"
       >
         {{ prettyBytes(file.size) }}
+      </td>
+      <td>
+        {{ file.type }}
       </td>
       <td>
         <div class="truncate">

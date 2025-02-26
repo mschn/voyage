@@ -5,23 +5,30 @@ export interface File {
   name: string;
   size: number;
   modifiedDate: Date;
+  type?: string;
 }
 
-export type FileSortFields = 'name' | 'size' | 'modifiedDate';
+export type FileSortFields = 'name' | 'size' | 'modifiedDate' | 'type';
 
 export function isFileEqual(f1: File, f2: File) {
   return (
     f1.name === f2.name &&
     f1.isDirectory === f2.isDirectory &&
     f1.isFile === f2.isFile &&
-    f1.size === f2.size
+    f1.size === f2.size &&
+    f1.type === f2.type
   );
 }
 
 export function isFileSortField(
   field?: string | null,
 ): field is FileSortFields {
-  return field === 'name' || field === 'size' || field === 'modifiedDate';
+  return (
+    field === 'name' ||
+    field === 'size' ||
+    field === 'modifiedDate' ||
+    field === 'type'
+  );
 }
 
 export type FilePreviewOutput = { path: string; cb: (data: any) => void };
@@ -31,7 +38,7 @@ export function getFileExtension(file: File) {
 }
 
 export function getExtension(name: string) {
-  return name.substring(name.lastIndexOf('.') + 1).toLowerCase();
+  return name.split('.').pop()?.toLowerCase() ?? '';
 }
 
 export function sortFiles(
@@ -52,7 +59,19 @@ export function sortFiles(
     else if (value1 == null && value2 == null) result = 0;
     else if (typeof value1 === 'string' && typeof value2 === 'string')
       result = value1.localeCompare(value2);
-    else result = value1 < value2 ? -1 : value1 > value2 ? 1 : 0;
+    else result = value1! < value2! ? -1 : value1! > value2! ? 1 : 0;
     return order * result;
   });
+}
+
+export function addType(file: File) {
+  if (file.isDirectory) {
+    file.type = 'Folder';
+  } else {
+    const ext = getExtension(file.name);
+    if (!file.type) {
+      // TODO actual whitelist mapping -
+      file.type = ext.toUpperCase();
+    }
+  }
 }
