@@ -2,7 +2,10 @@ import { File, getFileExtension } from './model';
 
 export function getFileIcon(file: File): string {
   const ext = getFileExtension(file);
-  return iconPerExtension[ext] ?? 'fa-file';
+  if (ext) {
+    return fileTypes[ext]?.icon ?? 'fa-file';
+  }
+  return 'fa-file';
 }
 
 export const ImageExtensions = ['png', 'jpg', 'jpeg', 'gif', 'svg'];
@@ -22,39 +25,47 @@ export const TextExtensions = [
 export const PreviewExtensions = ['pdf', ...ImageExtensions, ...TextExtensions];
 
 export function canPreviewFile(file: File) {
-  return PreviewExtensions.includes(getFileExtension(file));
+  const ext = getFileExtension(file);
+  if (ext) {
+    return PreviewExtensions.includes(ext);
+  }
+  return false;
 }
 
-export const iconPerExtension: Record<string, string> = {
-  css: 'fa-file-code',
-  csv: 'fa-file-lines',
-  doc: 'fa-file-word',
-  docx: 'fa-file-word',
-  gif: 'fa-file-video',
-  gz: 'fa-file-zipper',
-  html: 'fa-file-code',
-  jpeg: 'fa-file-image',
-  jpg: 'fa-file-image',
-  js: 'fa-file-code',
-  json: 'fa-file-code',
-  log: 'fa-file-lines',
-  md: 'fa-file-code',
-  mov: 'fa-file-video',
-  mp3: 'file-audio',
-  mp4: 'fa-file-video',
-  mpg: 'fa-file-video',
-  pdf: 'fa-file-pdf',
-  png: 'fa-file-image',
-  py: 'fa-file-code',
-  sh: 'fa-file-code',
-  svg: 'fa-file-image',
-  tar: 'fa-file-zipper',
-  ts: 'fa-file-code',
-  txt: 'fa-file-lines',
-  xls: 'fa-file-excel',
-  xlsx: 'fa-file-excel',
-  xml: 'fa-file-code',
-  yaml: 'fa-file-code',
-  yml: 'fa-file-code',
-  zip: 'fa-file-zipper',
-};
+export const fileTypes: Record<string, { icon: string; description: string }> =
+  {
+    css: { icon: 'fa-file-code', description: 'CSS Document' },
+    csv: { icon: 'fa-file-lines', description: 'CSV Document' },
+    doc: { icon: 'fa-file-word', description: 'Word Document' },
+    docx: { icon: 'fa-file-word', description: 'Word Document' },
+    gif: { icon: 'fa-file-video', description: 'GIF Image' },
+    gz: { icon: 'fa-file-zipper', description: 'Archive' },
+    html: { icon: 'fa-file-code', description: 'HTML Document' },
+    jpeg: { icon: 'fa-file-image', description: 'JPG Image' },
+    jpg: { icon: 'fa-file-image', description: 'JPG Image' },
+    js: { icon: 'fa-file-code', description: 'Javascript Document' },
+    json: { icon: 'fa-file-code', description: 'JSON Document' },
+    log: { icon: 'fa-file-lines', description: 'Log Document' },
+    md: { icon: 'fa-file-code', description: 'Markdown Document' },
+    mov: { icon: 'fa-file-video', description: 'QuickTime Movie' },
+    mp3: { icon: 'file-audio', description: 'MP3 Audio' },
+    mp4: { icon: 'fa-file-video', description: 'MP4 Movie' },
+    mpg: { icon: 'fa-file-video', description: 'MPEG Movie' },
+    pdf: { icon: 'fa-file-pdf', description: 'PDF Document' },
+    png: { icon: 'fa-file-image', description: 'PNG Image' },
+    py: { icon: 'fa-file-code', description: 'Python Document' },
+    sh: { icon: 'fa-file-code', description: 'Shell Script' },
+    svg: {
+      icon: 'fa-file-image',
+      description: 'SVG Image',
+    },
+    tar: { icon: 'fa-file-zipper', description: 'Archive' },
+    ts: { icon: 'fa-file-code', description: 'Typescript File' },
+    txt: { icon: 'fa-file-lines', description: 'Plain Text' },
+    xls: { icon: 'fa-file-excel', description: 'Excel Document' },
+    xlsx: { icon: 'fa-file-excel', description: 'Excel Document' },
+    xml: { icon: 'fa-file-code', description: 'XML Document' },
+    yaml: { icon: 'fa-file-code', description: 'YAML Document' },
+    yml: { icon: 'fa-file-code', description: 'YAM: Document' },
+    zip: { icon: 'fa-file-zipper', description: 'Archive' },
+  };

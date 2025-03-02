@@ -1,3 +1,5 @@
+import { fileTypes } from './file-types';
+
 export interface File {
   isDirectory: boolean;
   isFile: boolean;
@@ -38,7 +40,10 @@ export function getFileExtension(file: File) {
 }
 
 export function getExtension(name: string) {
-  return name.split('.').pop()?.toLowerCase() ?? '';
+  if (!name.includes('.')) {
+    return undefined;
+  }
+  return name.split('.').pop()?.toLowerCase();
 }
 
 export function sortFiles(
@@ -69,9 +74,15 @@ export function addType(file: File) {
     file.type = 'Folder';
   } else {
     const ext = getExtension(file.name);
-    if (!file.type) {
-      // TODO actual whitelist mapping -
-      file.type = ext.toUpperCase();
+    if (!ext) {
+      file.type = 'Document';
+    } else if (!file.type) {
+      const desc = fileTypes[ext]?.description;
+      if (desc) {
+        file.type = desc;
+      } else {
+        file.type = `${ext.toUpperCase()} Document`;
+      }
     }
   }
 }

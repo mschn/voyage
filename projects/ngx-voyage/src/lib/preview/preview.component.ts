@@ -25,10 +25,18 @@ export class PreviewComponent {
   }
 
   isImage() {
-    return ImageExtensions.includes(getExtension(this.name()));
+    const ext = getExtension(this.name());
+    if (ext) {
+      return ImageExtensions.includes(ext);
+    }
+    return false;
   }
 
   isText() {
-    return TextExtensions.includes(getExtension(this.name()));
+    const ext = getExtension(this.name());
+    if (ext) {
+      return TextExtensions.includes(ext);
+    }
+    return false;
   }
 }
