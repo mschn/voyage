@@ -1,14 +1,21 @@
 <div class="h-full w-full flex flex-row bg-gray-200 dark:bg-gray-800 p-2">
-  <div class="p-3 px-2 flex flex-col items-center">
-    <div class="font-bold font-serif text-2xl mt-1">
-      <img src="voyage.svg" class="h-10 w-10" />
+  <div
+    class="p-3 pr-2 pl-0 flex flex-col items-center text-gray-500 dark:text-gray-400"
+  >
+    <div
+      class="font-bold font-serif text-3xl rounded-lg h-[3.2rem] w-[3.2rem] pt-2 text-center"
+    >
+      <span class="absolute text-gray-800 dark:text-gray-100 left-6 top-6"
+        >V</span
+      >
+      <i class="fa-solid fa-cloud text-[#bcbcbc] dark:text-gray-600"></i>
     </div>
-    <div class="text-gray-500 mt-auto text-xl">
+    <div class="mt-auto text-xl">
       <a href="https://github.com/mschn/voyage" target="_blank"
         ><i class="fa-brands fa-github"></i
       ></a>
     </div>
-    <div class="text-sm text-gray-500">{{ version.value() }}</div>
+    <div class="text-sm">{{ version.value() }}</div>
   </div>
 
   <ngx-voyage
