@@ -21,18 +21,18 @@ export class MessageComponent {
 
   classes = {
     error: {
-      bg: 'bg-red-100',
-      text: 'text-red-700',
+      bg: 'bg-red-100 dark:bg-red-800',
+      text: 'text-red-700 dark:text-red-300',
       icon: 'fa-circle-xmark',
     },
     warn: {
-      bg: 'bg-orange-100',
-      text: 'text-orange-700',
+      bg: 'bg-orange-100 dark:bg-orange-800',
+      text: 'text-orange-700 dark:text-orange-300',
       icon: 'fa-triangle-exclamation',
     },
     info: {
-      bg: 'bg-gray-100',
-      text: 'text-gray-700',
+      bg: 'bg-gray-100 dark:bg-gray-800',
+      text: 'text-gray-700 dark:text-gray-300',
       icon: 'fa-circle-info',
     },
   };
