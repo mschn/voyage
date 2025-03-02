@@ -8,8 +8,10 @@ import {
   input,
   LOCALE_ID,
   model,
+  OnChanges,
   output,
   signal,
+  SimpleChanges,
   viewChild,
 } from '@angular/core';
 import { isToday, isYesterday } from 'date-fns';
@@ -52,7 +54,7 @@ import { ProgressBarModule } from 'primeng/progressbar';
     ProgressBarModule,
   ],
 })
-export class ListComponent {
+export class ListComponent implements OnChanges {
   #locale = inject(LOCALE_ID);
   #store = inject(Store);
 
@@ -123,6 +125,12 @@ export class ListComponent {
     effect(() => {
       writeSortToLocalstorage(this.sortOrder(), this.sortField());
     });
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['path']) {
+      this.selectedFile.set(undefined);
+    }
   }
 
   onDoubleClick(file: File) {
