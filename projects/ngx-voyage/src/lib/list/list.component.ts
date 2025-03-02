@@ -130,6 +130,7 @@ export class ListComponent implements OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     if (changes['path']) {
       this.selectedFile.set(undefined);
+      this.showPreview.set(false);
     }
   }
 
