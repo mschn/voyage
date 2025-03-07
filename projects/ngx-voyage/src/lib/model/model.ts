@@ -71,17 +71,17 @@ export function sortFiles(
 
 export function addType(file: File) {
   if (file.isDirectory) {
-    file.type = 'Folder';
+    file.type = 'FOLDER';
   } else {
     const ext = getExtension(file.name);
     if (!ext) {
-      file.type = 'Document';
+      file.type = 'DOCUMENT';
     } else if (!file.type) {
       const desc = fileTypes[ext]?.description;
       if (desc) {
         file.type = desc;
       } else {
-        file.type = `${ext.toUpperCase()} Document`;
+        file.type = `${ext.toUpperCase()}`;
       }
     }
   }

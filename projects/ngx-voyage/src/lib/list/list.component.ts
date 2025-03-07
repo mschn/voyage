@@ -1,4 +1,4 @@
-import { formatDate, NgClass } from '@angular/common';
+import { NgClass } from '@angular/common';
 import {
   Component,
   computed,
@@ -14,12 +14,22 @@ import {
   SimpleChanges,
   viewChild,
 } from '@angular/core';
-import { isToday, isYesterday } from 'date-fns';
+import { format, isToday, isYesterday } from 'date-fns';
 import { MenuItem, SortEvent } from 'primeng/api';
 import { ContextMenu, ContextMenuModule } from 'primeng/contextmenu';
 import { DialogModule } from 'primeng/dialog';
+import { ProgressBarModule } from 'primeng/progressbar';
 import { Table, TableModule } from 'primeng/table';
+import { getDateFnsLocale, getMessages } from '../i18n/i18n';
+import { TranslatePipe } from '../i18n/translate.pipe';
+import { MessageComponent } from '../message/message.component';
 import { canPreviewFile, getFileIcon } from '../model/file-types';
+import {
+  getSortFieldFromLocalstorage,
+  getSortOrderFromLocalstorage,
+  writeSortToLocalstorage,
+} from '../model/localstorage';
+import { Message } from '../model/message';
 import {
   File,
   FilePreviewOutput,
@@ -31,14 +41,6 @@ import {
 import { Store } from '../model/store';
 import { prettyBytes } from '../model/utils';
 import { PreviewComponent } from '../preview/preview.component';
-import { MessageComponent } from '../message/message.component';
-import { Message } from '../model/message';
-import {
-  getSortFieldFromLocalstorage,
-  getSortOrderFromLocalstorage,
-  writeSortToLocalstorage,
-} from '../model/localstorage';
-import { ProgressBarModule } from 'primeng/progressbar';
 
 @Component({
   selector: 'ngx-voyage-list',
@@ -52,6 +54,7 @@ import { ProgressBarModule } from 'primeng/progressbar';
     PreviewComponent,
     MessageComponent,
     ProgressBarModule,
+    TranslatePipe,
   ],
 })
 export class ListComponent implements OnChanges {
@@ -249,13 +252,16 @@ export class ListComponent implements OnChanges {
   }
 
   formatDate(file: File) {
-    const time = formatDate(file.modifiedDate, 'H:mm', this.#locale);
+    const locale = getDateFnsLocale();
+    const time = format(file.modifiedDate, 'H:mm', { locale });
+    const messages = getMessages();
     if (isToday(file.modifiedDate)) {
-      return `Today at ${time}`;
+      return `${messages.TODAY_AT} ${time}`;
     } else if (isYesterday(file.modifiedDate)) {
-      return `Yesterday at ${time}`;
+      return `${messages.YESTERDAY_AT} ${time}`;
     } else {
-      return `${formatDate(file.modifiedDate, 'd LLL YYYY', this.#locale)} at ${time}`;
+      const date = format(file.modifiedDate, 'd LLL yyyy', { locale });
+      return `${date} ${messages.AT} ${time}`;
     }
   }
 

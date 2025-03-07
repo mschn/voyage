@@ -1,5 +1,6 @@
 import { Component, HostListener, input, output } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
+import { TranslatePipe } from '../i18n/translate.pipe';
 import { ImageExtensions, TextExtensions } from '../model/file-types';
 import { getExtension } from '../model/model';
 import { ImgComponent } from './img.component';
@@ -8,7 +9,13 @@ import { TextComponent } from './text.component';
 
 @Component({
   selector: 'ngx-voyage-preview',
-  imports: [ButtonModule, PdfComponent, ImgComponent, TextComponent],
+  imports: [
+    ButtonModule,
+    PdfComponent,
+    ImgComponent,
+    TextComponent,
+    TranslatePipe,
+  ],
   templateUrl: './preview.component.html',
 })
 export class PreviewComponent {

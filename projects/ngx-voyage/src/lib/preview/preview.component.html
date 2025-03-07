@@ -1,7 +1,7 @@
 <div class="absolute top-0 left-0 z-10 w-full h-full bg-black/75 flex flex-col">
   <div class="flex flex-row gap-3 bg-gray-900 p-3 items-center">
     <p-button (onClick)="close.emit()">
-      <i class="fa-solid fa-close"></i> Close
+      <i class="fa-solid fa-close"></i> {{ "CLOSE" | translate }}
     </p-button>
     <h1 class="text-2xl text-gray-100">{{ name() }}</h1>
   </div>
