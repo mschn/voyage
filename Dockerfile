@@ -6,7 +6,6 @@ RUN npm ci
 COPY . /app/
 RUN npm run
 RUN cat package.json
-RUN npm run build:lib
 RUN npm run build:app
 
 FROM node:18-alpine
