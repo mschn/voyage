@@ -3,29 +3,6 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "ngx-voyage": {
-      "projectType": "library",
-      "root": "projects/ngx-voyage",
-      "sourceRoot": "projects/ngx-voyage/src",
-      "prefix": "lib",
-      "architect": {
-        "build": {
-          "builder": "@angular/build:ng-packagr",
-          "options": {
-            "project": "projects/ngx-voyage/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "projects/ngx-voyage/tsconfig.lib.prod.json"
-            },
-            "development": {
-              "tsConfig": "projects/ngx-voyage/tsconfig.lib.json"
-            }
-          },
-          "defaultConfiguration": "production"
-        }
-      }
-    },
     "voyage": {
       "projectType": "application",
       "schematics": {},
@@ -41,11 +18,6 @@
             "browser": "projects/voyage/src/main.ts",
             "tsConfig": "projects/voyage/tsconfig.app.json",
             "assets": [
-              {
-                "input": "dist/ngx-voyage/assets",
-                "glob": "*",
-                "output": "assets"
-              },
               {
                 "glob": "**/*",
                 "input": "projects/voyage/public"

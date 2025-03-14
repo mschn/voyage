@@ -1,8 +1,8 @@
 # Voyage
 
-Voyage is a file explorer in your browser.
+[![Docker](https://img.shields.io/docker/v/mschnr/voyage?color=blue&label=docker)](https://hub.docker.com/r/mschnr/voyage)
 
-<img src="projects/voyage/public/voyage.svg" width="96" />
+Voyage is a file explorer in your browser.
 
 ## Startup
 

@@ -9,11 +9,7 @@
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "paths": {
-      "ngx-voyage": [
-        "./projects/ngx-voyage/src/public-api.ts"
-      ]
-    },
+    "paths": {},
     "skipLibCheck": true,
     "isolatedModules": true,
     "esModuleInterop": true,

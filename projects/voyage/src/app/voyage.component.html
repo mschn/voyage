@@ -1,23 +1,17 @@
-<div class="h-full w-full flex flex-row bg-gray-200 dark:bg-gray-800 p-2">
-  <div
-    class="p-2 pl-0 flex flex-col items-center text-gray-500 dark:text-gray-400"
-  >
-    <div class="font-bold font-serif text-3xl rounded-lg pt-3 text-center">
-      <span class="absolute text-gray-800 dark:text-gray-100 left-4 top-6"
-        >V</span
-      >
-      <i class="fa-solid fa-cloud text-[#bcbcbc] dark:text-gray-600"></i>
+<div class="h-full w-full flex flex-col bg-gray-200 dark:bg-gray-800">
+  <div class="flex gap-3 p-1 px-3 bg-neutral-50 dark:bg-neutral-950 text-gray-600 dark:text-gray-400 border-b border-gray-300 dark:border-gray-600">
+    <div class="font-bold text-2xl ">
+      <span >Voyage</span>
     </div>
-    <div class="mt-auto text-xl">
-      <a href="https://github.com/mschn/voyage" target="_blank"
-        ><i class="fa-brands fa-github"></i
-      ></a>
+    <div class="ml-auto self-center">
+      <a href="https://github.com/mschn/voyage" target="_blank">{{
+        version.value()
+      }}</a>
     </div>
-    <div class="text-sm">{{ version.value() }}</div>
   </div>
 
   <ngx-voyage
-    class="flex-1"
+    class="flex-1 p-3"
     [path]="path()"
     [files]="files()"
     [message]="message()"
@@ -25,5 +19,6 @@
     (openFolder)="openFolder($event)"
     (openFile)="openFile($event)"
     (previewFile)="getFileContent($event)"
+    styleClass="p-0!"
   ></ngx-voyage>
 </div>
