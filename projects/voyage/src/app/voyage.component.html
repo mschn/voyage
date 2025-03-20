@@ -1,24 +1,26 @@
 <div class="h-full w-full flex flex-col bg-gray-200 dark:bg-gray-800">
-  <div class="flex gap-3 p-1 px-3 bg-neutral-50 dark:bg-neutral-950 text-gray-600 dark:text-gray-400 border-b border-gray-300 dark:border-gray-600">
-    <div class="font-bold text-2xl ">
-      <span >Voyage</span>
-    </div>
-    <div class="ml-auto self-center">
-      <a href="https://github.com/mschn/voyage" target="_blank">{{
-        version.value()
-      }}</a>
-    </div>
-  </div>
 
   <ngx-voyage
-    class="flex-1 p-3"
+    class="flex-1"
     [path]="path()"
+    (pathChange)="openFolder($event)"
     [files]="files()"
     [message]="message()"
     [loading]="filesResource.isLoading()"
-    (openFolder)="openFolder($event)"
     (openFile)="openFile($event)"
     (previewFile)="getFileContent($event)"
     styleClass="p-0!"
-  ></ngx-voyage>
+  >
+    <ng-template #header>
+      <div class="font-bold text-2xl">
+        <div class="mb-3 mt-2 pl-3 text-gray-800 dark:text-gray-200">Voyage</div>
+        <hr class="border-gray-400 dark:border-gray-600">
+      </div>
+    </ng-template>
+    <ng-template #footer>
+      <a href="https://github.com/mschn/voyage" target="_blank" class="text-gray-600">Voyage {{
+        version.value()
+      }}</a>
+    </ng-template>
+  </ngx-voyage>
 </div>
