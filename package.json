@@ -23,7 +23,7 @@
     "@tailwindcss/postcss": "^4.0.0",
     "date-fns": "^4.1.0",
     "highlight.js": "^11.11.1",
-    "ngx-voyage": "^0.0.14",
+    "ngx-voyage": "^0.1.0",
     "postcss": "^8.5.1",
     "primeng": "^19.0.5",
     "rxjs": "~7.8.0",

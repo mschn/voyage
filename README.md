@@ -48,6 +48,7 @@ npm run start:app
 
 ## Built with
 
+- [ngx-voyage](https://github.com/mschn/ngx-voyage)
 - [Angular](https://angular.dev/)
 - [Tailwind](https://tailwindcss.com/)
 - [Primeng](https://primeng.org/)
