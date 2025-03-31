@@ -1,7 +1,5 @@
 <div class="h-full w-full flex flex-col bg-gray-200 dark:bg-gray-800">
-
   <ngx-voyage
-    class="flex-1"
     [path]="path()"
     (pathChange)="openFolder($event)"
     [files]="files()"
@@ -13,14 +11,18 @@
   >
     <ng-template #header>
       <div class="font-bold text-2xl">
-        <div class="mb-3 mt-2 pl-3 text-gray-800 dark:text-gray-200">Voyage</div>
-        <hr class="border-gray-400 dark:border-gray-600">
+        <div class="mb-3 mt-2 pl-3 text-gray-800 dark:text-gray-200"
+          >Voyage</div
+        >
       </div>
     </ng-template>
     <ng-template #footer>
-      <a href="https://github.com/mschn/voyage" target="_blank" class="text-gray-600">Voyage {{
-        version.value()
-      }}</a>
+      <a
+        href="https://github.com/mschn/voyage"
+        target="_blank"
+        class="text-gray-600"
+        >Voyage {{ version.value() }}</a
+      >
     </ng-template>
   </ngx-voyage>
 </div>
