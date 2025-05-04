@@ -101,6 +101,19 @@ export class VoyageComponent {
     });
   }
 
+  deleteFile(file: File) {
+    const url = encodeURIComponent(this.path() + '/' + file.name);
+    fetch(`${API_URL}/delete/${url}`, {
+      method: 'DELETE',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    }).then(() => {
+      this.filesResource.reload();
+    });
+  }
+
   renameFile(renameFile: RenameFile) {
     const body = {
       from: this.path() + '/' + renameFile.file.name,

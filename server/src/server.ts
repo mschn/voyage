@@ -80,11 +80,22 @@ app.get('/api/open/:file', async (req, res) => {
   }
 });
 
+app.delete('/api/delete/:file', async (req, res) => {
+  const { file } = req.params;
+  const filePath = path.join(FILES_ROOT, decodeURIComponent(file));
+  try {
+    fs.rmSync(filePath);
+    res.status(200).send();
+  } catch (e) {
+    console.error('POST /api/delete');
+    res.status(500).send({ error: 'Failed to delete file', cause: e });
+  }
+});
+
 app.post('/api/rename', async (req, res) => {
   try {
     const from = path.join(FILES_ROOT, req.body.from);
     const to = path.join(FILES_ROOT, req.body.to);
-
     fs.renameSync(from, to);
     res.status(200).send();
   } catch (e) {
