@@ -7,6 +7,7 @@
     [loading]="filesResource.isLoading()"
     (openFile)="openFile($event)"
     (previewFile)="getFileContent($event)"
+    (renameFile)="renameFile($event)"
     styleClass="p-0!"
   >
     <ng-template #header>

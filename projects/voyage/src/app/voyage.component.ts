@@ -12,6 +12,7 @@ import {
   File,
   FilePreviewOutput,
   NgxVoyageComponent,
+  RenameFile,
   isMessage,
 } from 'ngx-voyage';
 import { filter } from 'rxjs';
@@ -97,6 +98,24 @@ export class VoyageComponent {
     fetch(`${API_URL}/open/${url}`).then(async (value) => {
       const blob = await value.blob();
       cb(blob);
+    });
+  }
+
+  renameFile(renameFile: RenameFile) {
+    const body = {
+      from: this.path() + '/' + renameFile.file.name,
+      to: this.path() + '/' + renameFile.newName,
+    };
+
+    fetch(`${API_URL}/rename`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body),
+    }).then(() => {
+      this.filesResource.reload();
     });
   }
 }

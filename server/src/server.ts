@@ -12,8 +12,10 @@ const port = 3003;
 
 const FILES_ROOT = process.env.VOYAGE_ROOT ?? homedir;
 
-app.use(cors());
+app.use(express.json()); // to support JSON-encoded bodies
+app.use(express.urlencoded({ extended: true })); // to support URL-encoded bodies
 
+app.use(cors());
 app.use(express.static('../dist/voyage/browser/'));
 
 app.get('/api/version', (req, res) => {
@@ -78,7 +80,20 @@ app.get('/api/open/:file', async (req, res) => {
   }
 });
 
-app.get('*', (req, res) => {
+app.post('/api/rename', async (req, res) => {
+  try {
+    const from = path.join(FILES_ROOT, req.body.from);
+    const to = path.join(FILES_ROOT, req.body.to);
+
+    fs.renameSync(from, to);
+    res.status(200).send();
+  } catch (e) {
+    console.error('POST /api/rename');
+    res.status(500).send({ error: 'Failed to rename file', cause: e });
+  }
+});
+
+app.get(/(.*)/, (req, res) => {
   res.sendFile(path.resolve(__dirname, '../../dist/voyage/browser/index.html'));
 });
 
