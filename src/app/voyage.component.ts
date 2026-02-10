@@ -29,9 +29,9 @@ export class VoyageComponent {
   path = signal<string>('/');
 
   filesResource = resource({
-    request: () => encodeURIComponent(this.path()),
-    loader: async ({ request, abortSignal }) => {
-      const response = await fetch(`${API_URL}/ls/${request}`, {
+    params: () => encodeURIComponent(this.path()),
+    loader: async ({ params, abortSignal }) => {
+      const response = await fetch(`${API_URL}/ls/${params}`, {
         signal: abortSignal,
       });
       const json = await response.json();
