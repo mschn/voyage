@@ -1,4 +1,4 @@
-FROM node:18-alpine AS build
+FROM node:24-alpine AS build
 WORKDIR /app
 
 COPY package*.json /app/
@@ -8,7 +8,7 @@ RUN npm run
 RUN cat package.json
 RUN npm run build:app
 
-FROM node:18-alpine
+FROM node:24-alpine
 COPY --from=build /app/dist /app/dist
 WORKDIR /app/server
 COPY ./server/package*.json /app/server/
